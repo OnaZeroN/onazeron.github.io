@@ -3,60 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
   <!-- Загрузка шрифта Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-a {
-  display: block;
-  margin: 10px 0;
-}
+    a {
+      display: block;
+      margin: 10px 0;
+    }
 
-body {
-  background: #f2f2f2; 
-  height: 100%; /* Установка высоты на 100% */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+    body {
+        color: var(--tg-theme-text-color);
+        background: var(--tg-theme-bg-color);
+        height: 100%; /* Установка высоты на 100% */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
-button {
-  display: block;
-  margin: 1rem auto;
-  font-family: 'Montserrat', sans-serif;
-  border-radius: 24px;
-  border: none;
-  padding: 1rem 2rem;
-  color: white;
-  background: #1a73e8; 
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    button {
 
-button:hover{
-  background: #1155cc;
-}
-button_list {
-  display: block;
-}
-.button_list {
-  width: 150px;
-}
+      display: block;
+      margin: 1rem auto;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 24px;
+      border: none;
+      padding: 1rem 2rem;
 
-.hide {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-}
+    button:hover{
+      background: #1155cc;
+    }
 
-.show {
-  max-height: 500px;
-  opacity: 1;
-  transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+    button_list {
+      display: block;
+    }
 
-}
+    .button_list {
+      width: 150px;
+    }
+
+    .hide {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+
+    }
+
+    .show {
+      max-height: 500px;
+      opacity: 1;
+      transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+
+    }
   </style>
 <title>Toggle Sections</title>
 </head>
@@ -86,8 +90,14 @@ button_list {
 
 
   <script>
+    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+    tg.expand(); //расширяем на все окно
 
-
+    tg.MainButton.text = "Changed Text"; //изменяем текст кнопки
+    tg.MainButton.setText("Changed Text1"); //изменяем текст кнопки иначе
+    tg.MainButton.textColor = "#F55353"; //изменяем цвет текста кнопки
+    tg.MainButton.color = "#143F6B"; //изменяем цвет бэкграунда кнопки
+    tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры
     const handleClick = event => {
       const divs = document.querySelectorAll("div");
       const target = event.target.nextElementSibling;
@@ -106,7 +116,10 @@ button_list {
           item.classList.add("hide");
         }
       });
-
+    Telegram.WebApp.onEvent('mainButtonClicked', function(){
+      tg.sendData("some string that we need to send");
+      //при клике на основную кнопку отправляем данные в строковом виде
+   });
     };
 document.querySelectorAll('.myButton').forEach(button => {
   button.onclick = function() {
