@@ -23,14 +23,14 @@
     }
 
     button {
-
+      background: var(--tg-theme-button-color);
+      color: var(--tg-theme-button-text-color);
       display: block;
       margin: 1rem auto;
       font-family: 'Montserrat', sans-serif;
       border-radius: 24px;
       border: none;
       padding: 1rem 2rem;
-
       cursor: pointer;
       transition: background 0.3s ease;
     }
@@ -38,7 +38,11 @@
     button:hover{
       background: #1155cc;
     }
-
+    .changeable {
+          font-size: 20px;        /* Увеличиваем размер шрифта */
+          padding: 20px 40px;     /* Увеличиваем внутренние отступы */
+          width: 200px;           /* Задаем ширину кнопки */
+    }
     button_list {
       display: block;
     }
@@ -61,12 +65,13 @@
       transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
 
     }
+
   </style>
 <title>Toggle Sections</title>
 </head>
 <body>
 
-  <button>Кнопка 1</button>
+  <button>Выбор личности</button>
 
   <div class="hide">
     <button class="myButton">Нажми на меня</button>
@@ -75,7 +80,7 @@
   </div>
 
 
-  <button>Кнопка 2</button>
+  <button>Выбор модели StableDiffusion</button>
 
   <div class="hide">
     <button class="myButton">Нажми на меня</button>
@@ -83,22 +88,17 @@
   </div>
 
 
-  <button>Кнопка 3</button>
+  <button>Выбор диалога</button>
   <div class="hide">
   <button class="myButton">Нажми на меня</button>
   </div>
 
 
   <script>
-    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-    tg.expand(); //расширяем на все окно
-
-    tg.MainButton.text = "Changed Text"; //изменяем текст кнопки
-    tg.MainButton.setText("Changed Text1"); //изменяем текст кнопки иначе
-    tg.MainButton.textColor = "#F55353"; //изменяем цвет текста кнопки
-    tg.MainButton.color = "#143F6B"; //изменяем цвет бэкграунда кнопки
-    tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры
-    tg.MainButton.show() //показываем
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+        tg.expand(); //расширяем на все окно
+        tg.MainButton.text = "Готово!"; //изменяем текст кнопки
+        tg.MainButton.show() //показываем
 
     const handleClick = event => {
       const divs = document.querySelectorAll("div");
@@ -121,19 +121,19 @@
     Telegram.WebApp.onEvent('mainButtonClicked', function(){
       tg.sendData("some string that we need to send");
       //при клике на основную кнопку отправляем данные в строковом виде
-   });
+        });
     };
-document.querySelectorAll('.myButton').forEach(button => {
-  button.onclick = function() {
-    alert('Кнопка с классом "myButton" была нажата!');
-  }
-});
+    document.querySelectorAll('.myButton').forEach(button => {
+      button.onclick = function() {
+        alert('Кнопка с классом "myButton" была нажата!');
+      }
+    });
 
-document.querySelectorAll("button").forEach(item => {
-  if(!item.classList.contains("myButton")) {
-    item.addEventListener("click", handleClick);
-  }
-});
+    document.querySelectorAll("button").forEach(item => {
+      if(!item.classList.contains("myButton")) {
+        item.addEventListener("click", handleClick);
+      }
+    });
   </script>
 </body>
 </html>
