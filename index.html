@@ -30,7 +30,7 @@ body, html {
 }
 
 .tablink:hover {
-    background-color: #777;
+    background-color: var(--tg-theme-hint-color);
 }
 
 /* Style the tab content (and add height:100% for full page content) */
@@ -79,23 +79,27 @@ body, html {
   tg.expand(); //расширяем на все окно
   tg.MainButton.text = "Готово!"; //изменяем текст кнопки
   tg.MainButton.show() //показываем
-  
-function openPage(pageName,elmnt,color) {
+
+  function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+      tabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
+      tablinks[i].style.backgroundColor = "";
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = color;
 
-}
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+  }
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+  
+  Telegram.WebApp.onEvent('mainButtonClicked', function(){
+    tg.sendData("some string that we need to send");
+  });};
 </script>
      
 </body>
