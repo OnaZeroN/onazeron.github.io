@@ -56,7 +56,7 @@ body, html {
 
 <div id="Profile" class="tabcontent">
   <h3>Profile</h3>
-  <p>Home is where the heart is..</p>
+  <h2 id="id">Loading</h2>
 </div>
 
 <div id="Settings" class="tabcontent">
@@ -77,6 +77,12 @@ body, html {
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
+  let url = 'https://c580-80-91-24-243.ngrok-free.app';
+  let data = {
+    id: 1,
+    requests: 10,
+    start_date: '2020-01-01',
+  }
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
@@ -84,7 +90,25 @@ body, html {
     tg.sendData("some string that we need to send");
   });
   
-  
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      'method': 'GetUserData',
+      'id': '1'
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+        const id = data.id;
+        const requests = data.requests;
+        const startDate = data.start_date;
+        document.getElementById("id").textContent = `ID: ${id}\n\nRequests: ${requests}\n\nStart Date: ${startDate}`;
+
+    })
+    .catch((error) => window.alert('Error: '+ error));
   
   function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
