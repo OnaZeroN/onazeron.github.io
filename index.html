@@ -23,9 +23,8 @@
     }
 
     button {
-      background: var(--tg-theme-button-color);
-      color: var(--tg-theme-button-text-color);
       display: block;
+      background: var(--tg-theme-button-color);
       margin: 1rem auto;
       font-family: 'Montserrat', sans-serif;
       border-radius: 24px;
@@ -33,12 +32,12 @@
       padding: 1rem 2rem;
       cursor: pointer;
       transition: background 0.3s ease;
-      width: 250px; /* Добавьте это свойство */
     }
-
+	
     button:hover{
-      background: #1155cc;
+      background: var(--tg-theme-hint-color);
     }
+    
     .changeable {
           font-size: 20px;        /* Увеличиваем размер шрифта */
           padding: 20px 40px;     /* Увеличиваем внутренние отступы */
@@ -50,6 +49,7 @@
 
     .button_list {
       width: 150px;
+      
     }
 
     .hide {
@@ -68,94 +68,202 @@
       transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
       border-radius: 24px;
     }
+	.tab {
+      width: 420px; /* Добавьте это свойство */
+      overflow: hidden;
+      justify-content: center;
+      background-color: #D3D3D3;
+      height: 100%; /* Установка высоты на 100% */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
 
-  </style>
-<title>Toggle Sections</title>
+	}
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        width: 125px; /* Добавьте это свойство */
+        height: 80px; /* Добавьте это свойство */
+        background-color: var(--tg-theme-button-color);
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        border-radius: 24px;
+
+    }
+
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+    .tabcontent button {
+        width: 300px; /* Добавьте это свойство */
+        height: 80px; /* Добавьте это свойство */
+		text-align: left;
+
+    }
+ </style>
+<title>Menu</title>
 </head>
 <body>
 
-
-  <button>Выбор личности</button>
-
-  <div class="hide" id="mode_list"></div>
-
-  <button>Выбор модели StableDiffusion</button>
-
-  <div class="hide">
-    <button class="myButton">Нажми на меня</button>
-    <button class="myButton">Нажми на меня</button>
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'profile')">Аккаунт</button>
+    <button class="tablinks" onclick="openCity(event, 'set')">Настройки</button>
+    <button class="tablinks" onclick="openCity(event, 'shop')">Тарифы</button>
   </div>
 
 
-  <button>Выбор диалога</button>
-  <div class="hide">
-  <button class="myButton">Нажми на меня</button>
+  <div id="profile" class="tabcontent">
+    <h3>London</h3>
+    <p>London is the capital city of England.</p>
   </div>
 
 
-  <script>
-      var json = [
-        {"text": "Учить JavaScript"},
-        {"text": "Практиковать JavaScript"},
-        {"text": "Стать мастером JavaScript"}
-      ];
+  <div id="set" class="tabcontent">
+    <button>Выбор личности</button>
 
-      var myDiv = document.getElementById('mode_list');
+    <div class="hide" id="mode_list"></div>
 
-      // функция для создания кнопок
-      function createButton(text) {
-          var button = document.createElement('button');
-          button.className = 'myButton';
-          button.innerHTML = text;
-          return button;
+    <button>Выбор модели StableDiffusion</button>
+
+    <div class="hide">
+      <button class="myButton">Нажми на меня</button>
+      <button class="myButton">Нажми на меня</button>
+    </div>
+
+
+    <button>Выбор диалога</button>
+    <div class="hide">
+    <button class="myButton">Нажми на меня</button>
+    </div>
+  </div>
+
+
+  <div id="shop" class="tabcontent">
+    <h3>Tokyo</h3>
+    <p>Tokyo is the capital of Japan.</p>
+  </div>
+    
+
+
+
+<script>
+  let url = 'https://c580-80-91-24-243.ngrok-free.app';
+  let headers = {
+    'Content-Type': 'application/json'
+  }
+
+  var json = [
+    {"text": "Учить JavaScript"},
+    {"text": "Практиковать JavaScript"},
+    {"text": "Стать мастером JavaScript"}
+  ];
+
+  var myDiv = document.getElementById('mode_list');
+
+  // функция для создания кнопок
+  function createButton(text) {
+    var button = document.createElement('button');
+    button.className = 'myButton';
+    button.innerHTML = text;
+    return button;
+  }
+
+  // заполняем div кнопками
+  for (var i = 0; i < json.length; i++) {
+    myDiv.appendChild(createButton(json[i].text));
+  }
+
+  let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+  tg.expand(); //расширяем на все окно
+  tg.MainButton.text = "Готово!"; //изменяем текст кнопки
+  tg.MainButton.show() //показываем
+
+  function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+    
+  const handleClick = event => {
+    const divs = document.querySelectorAll("div");
+    const target = event.target.nextElementSibling;
+
+    if (target.classList.contains('hide')) {
+      target.classList.remove("hide");
+      target.classList.add("show");
+    }
+    else {
+      target.classList.remove("show");
+      target.classList.add("hide");
+    }
+
+    divs.forEach(item => {
+      if (item !== target && item.classList.contains('show')) {
+        item.classList.remove("show");
+        item.classList.add("hide");
       }
+    });
 
-      // заполняем div кнопками
-      for (var i = 0; i < json.length; i++) {
-          myDiv.appendChild(createButton(json[i].text));
-      }
-
-
-
-    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-    tg.expand(); //расширяем на все окно
-    tg.MainButton.text = "Готово!"; //изменяем текст кнопки
-    tg.MainButton.show() //показываем
-
-    const handleClick = event => {
-      const divs = document.querySelectorAll("div");
-      const target = event.target.nextElementSibling;
-      if (target.classList.contains('hide')) {
-        target.classList.remove("hide");
-        target.classList.add("show");
-      }
-      else {
-        target.classList.remove("show");
-        target.classList.add("hide");
-      }
-
-      divs.forEach(item => {
-        if (item !== target && item.classList.contains('show')) {
-          item.classList.remove("show");
-          item.classList.add("hide");
-        }
-      });
     Telegram.WebApp.onEvent('mainButtonClicked', function(){
       tg.sendData("some string that we need to send");
-      //при клике на основную кнопку отправляем данные в строковом виде
-        });
-    };
-    document.querySelectorAll('.myButton').forEach(button => {
-      button.onclick = function() {
-        alert('Кнопка с классом "myButton" была нажата!');
-      }
     });
+  };
 
-    document.querySelectorAll("button").forEach(item => {
-      if(!item.classList.contains("myButton")) {
-        item.addEventListener("click", handleClick);
-      }
-    });
-  </script>
+  document.querySelectorAll('.myButton').forEach(button => {
+    button.onclick = function() {
+      alert('Кнопка с классом "myButton" была нажата!');
+
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          'param': '1'
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => response.json())
+      .then(data => window.alert(JSON.stringify(data)))
+      .catch((error) => window.alert('Error: '+ error));
+    }
+  });
+
+  document.querySelectorAll("button").forEach(item => {
+    if(!item.classList.contains("myButton") && !item.classList.contains("tablinks")) {
+      item.addEventListener("click", handleClick);
+    }
+  });
+</script>
 </body>
 </html>
+
+
+
