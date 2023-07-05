@@ -33,6 +33,7 @@
       padding: 1rem 2rem;
       cursor: pointer;
       transition: background 0.3s ease;
+      width: 250px; /* Добавьте это свойство */
     }
 
     button:hover{
@@ -52,18 +53,20 @@
     }
 
     .hide {
+      background: #D3D3D3;
       max-height: 0;
       opacity: 0;
       overflow: hidden;
       transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
-
+      border-radius: 24px;
     }
 
     .show {
+      background: #D3D3D3;
       max-height: 500px;
       opacity: 1;
       transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
-
+      border-radius: 24px;
     }
 
   </style>
@@ -71,14 +74,10 @@
 </head>
 <body>
 
+
   <button>Выбор личности</button>
 
-  <div class="hide">
-    <button class="myButton">Нажми на меня</button>
-    <button class="myButton">Нажми на меня</button>
-    <button class="myButton">Нажми на меня</button>
-  </div>
-
+  <div class="hide" id="mode_list"></div>
 
   <button>Выбор модели StableDiffusion</button>
 
@@ -95,10 +94,33 @@
 
 
   <script>
-        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
-        tg.expand(); //расширяем на все окно
-        tg.MainButton.text = "Готово!"; //изменяем текст кнопки
-        tg.MainButton.show() //показываем
+      var json = [
+        {"text": "Учить JavaScript"},
+        {"text": "Практиковать JavaScript"},
+        {"text": "Стать мастером JavaScript"}
+      ];
+
+      var myDiv = document.getElementById('mode_list');
+
+      // функция для создания кнопок
+      function createButton(text) {
+          var button = document.createElement('button');
+          button.className = 'myButton';
+          button.innerHTML = text;
+          return button;
+      }
+
+      // заполняем div кнопками
+      for (var i = 0; i < json.length; i++) {
+          myDiv.appendChild(createButton(json[i].text));
+      }
+
+
+
+    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+    tg.expand(); //расширяем на все окно
+    tg.MainButton.text = "Готово!"; //изменяем текст кнопки
+    tg.MainButton.show() //показываем
 
     const handleClick = event => {
       const divs = document.querySelectorAll("div");
