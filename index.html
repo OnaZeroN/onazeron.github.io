@@ -3,6 +3,9 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
+<!-- Загрузка шрифта Montserrat -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
 * {box-sizing: border-box}
 
@@ -72,6 +75,11 @@ body, html {
 </div>
 
 <script>
+  let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+  tg.expand(); //расширяем на все окно
+  tg.MainButton.text = "Готово!"; //изменяем текст кнопки
+  tg.MainButton.show() //показываем
+  
 function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
