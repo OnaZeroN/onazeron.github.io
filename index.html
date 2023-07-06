@@ -343,7 +343,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
   tg.onEvent('mainButtonClicked', function(){
-    tg.sendData("some string that we need to send");
+    tg.sendData(name_mode);
   });
   document.querySelector('.profile-card').style.display = 'none';
 
@@ -479,3 +479,5 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 </script>
 </body>
 </html>
+
+
