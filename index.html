@@ -204,7 +204,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 .panel_sd{
     padding: 0 18px;
-    background-color: white;
+    background: var(--tg-theme-secondary-bg-color);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -499,7 +499,7 @@ panel_sd.addEventListener('click', function(event) {
     
 tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-    tg.showAlert(name_mode);
+    tg.showAlert(currentlySelectedButton.textContent);
     tg.sendData(name_mode);
 });
     
@@ -565,3 +565,5 @@ tg.onEvent('mainButtonClicked', function(){
 </script>
 </body>
 </html>
+
+
