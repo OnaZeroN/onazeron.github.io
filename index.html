@@ -555,12 +555,13 @@ panel_sd.addEventListener('click', function(event) {
     });
   }
 tg.onEvent('mainButtonClicked', function(){
-    
-    window.alert(name_mode_sd);
-    window.alert(name_mode);
-    tg.sendData(JSON.stringify(name_mode));
+    tg.showAlert('Уже выбрано');
+    tg.HapticFeedback.impactOccurred('heavy')
+
 });
 
 </script>
 </body>
 </html>
+
+
