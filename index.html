@@ -46,7 +46,7 @@ body, html {
 #Settings {background-color: var(--tg-theme-secondary-bg-color);}
 #Shop {background-color: var(--tg-theme-secondary-bg-color);}
 #About {background-color: var(--tg-theme-secondary-bg-color);}
-  
+
 .loader {
     border: 13px solid #f3f3f3; /* Light grey */
     border-top: 13px solid #3498db; /* Blue */
@@ -56,7 +56,7 @@ body, html {
 
     animation: spin 2s linear infinite;
     margin: auto;
- 
+
     position: absolute;
     top: 40%;
     left: 40%;
@@ -168,7 +168,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 
 .accordion {
     font-size: 23px;
-    font-weight: 600;    
+    font-weight: 600;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -179,9 +179,9 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     background:	var(--tg-theme-bg-color);
     display: flex;
     flex-direction: column;
-    max-width: 400px;
     border-radius: 25px;
     color: var(--tg-theme-text-color);
+    margin-top: 20px;
     margin-bottom: 20px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 
@@ -199,6 +199,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+      margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .accordion:after {
@@ -206,7 +208,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     font-size: 20px;
     color: #777;
     float: right;
-    margin-left: 330px;
+    margin-left: 315px;
 }
 
 .active:after {
@@ -217,14 +219,14 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 .card .media {
 
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 20px;
-  width: 80%;
+  width: 90%;
   display: flex;
   align-items: left;
   color: var(--tg-theme-text-color);
   background: var(--tg-theme-bg-color);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 
 }
 .media img {
@@ -237,9 +239,9 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   flex-direction: column;
 }
 .media .media-body {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 12px;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  margin-left: 11px;
 
 }
 .name_mode {
@@ -251,13 +253,14 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   font-weight: 300;
 }
 .btn {
-  padding: 10px 10px;
+    padding: 0 18px;
+
   border: 0px solid #ffffff40;
   color: var(--tg-theme-text-color);
   cursor: pointer;
   border-radius: 20px;
   background: var(--tg-theme-secondary-bg-color);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 3px 5px rgba(0,0,0,0.4);
   margin-left: auto;
 }
 .btn:hover {
@@ -357,7 +360,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   })
     .then(response => response.json())
     .then(data => {
-			const id = 123;
+		const id = 123;
         const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
@@ -374,7 +377,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
         const panel = document.querySelector('.panel');
-        let currentlySelectedButton; 
+        let currentlySelectedButton;
         // функция создания новой карточки
         function createCard(name_mode, des_mode) {
             const card = document.createElement('div');
@@ -401,13 +404,14 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
             });
         }
     populatePanel();
-    
+
     panel.addEventListener('click', function(event) {
       if (event.target.classList.contains('select-button')) {
         // Если уже была выбранная кнопка
         if (currentlySelectedButton) {
            if (currentlySelectedButton === event.target) {
-            alert('Уже выбрано');
+            tg.showAlert('Уже выбрано');
+            tg.HapticFeedback.impactOccurred('heavy')
             return;
           }
           // Возвращаем ей оригинальный текст и стиль
@@ -415,6 +419,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
           currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
 
           // Если выбранная кнопка сейчас нажата повторно
+          tg.HapticFeedback.selectionChanged()
 
         }
 
@@ -442,11 +447,11 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = color;
   }
-  
-  // Get the element with id="defaultOpen" and click on it
-  
 
-  
+  // Get the element with id="defaultOpen" and click on it
+
+
+
   function showAlert(name_mode) {
     alert(name_mode);
   }
@@ -465,12 +470,10 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
       }
     });
   }
-  
-  
-</script>
 
+
+</script>
 </body>
 </html>
-
 
 
