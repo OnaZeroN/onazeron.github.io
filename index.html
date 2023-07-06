@@ -499,8 +499,7 @@ panel_sd.addEventListener('click', function(event) {
     
 tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-    tg.showAlert(currentlySelectedButton.id);
-    tg.sendData(currentlySelectedButton.id);
+    tg.sendData(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}`);
 });
     
     
