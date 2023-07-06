@@ -499,7 +499,7 @@ panel_sd.addEventListener('click', function(event) {
     
 tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-    tg.showAlert(currentlySelectedButton.textContent);
+    tg.showAlert(currentlySelectedButton.closest('.media-body.content-align').querySelector('.name_mode').innerText);
     tg.sendData(name_mode);
 });
     
