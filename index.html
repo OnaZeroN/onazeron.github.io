@@ -185,6 +185,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     color: var(--tg-theme-text-color);
     border: 1px solid #ffffff40;
     margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -234,14 +236,25 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 .card .media {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  width: 80%;
   display: flex;
-  align-items: center;
+  align-items: left;
+
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+
 }
 .media img {
   width: 50px;
 }
+
+
 .media .media-body {
-  margin-left: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
 .name_mode {
   font-size: 20px;
@@ -252,12 +265,18 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   font-weight: 300;
 }
 .btn {
+  padding: 15px 20px;
   border: 0px solid #ffffff40;
   color: var(--tg-theme-text-color);
   cursor: pointer;
   border-radius: 20px;
-  background: var(--tg-theme-bg-color);
-  margin-left: 120px;
+  background: var(--tg-theme-secondary-bg-color);
+  margin-left: 100px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+
+}
+.btn:hover {
+    background-color: var(--tg-theme-hint-color);
 }
 </style>
 </head>
@@ -300,21 +319,15 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   <div class="settings">
       <button class="accordion">Выбрать личность</button>
       <div class="panel">
-			
-        <div class="mode float-left">
           <div class="card">
             <div class="media">
-              <img src="https://imgur.com/ZnxJ2SY.png" class="mr-3">
               <div class="media-body">
                 <h5 class="name_mode">Anna Gibson</h5>
-                <div class="d-flex flex-row justify-content-between align-text-center">
                   <small class="des_mode">Creator</small>
                   <button class="btn">Выбрать</button>
-                </div>
               </div>
             </div>
           </div>
-        </div>
 
 
             
