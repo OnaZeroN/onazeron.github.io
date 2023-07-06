@@ -215,6 +215,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 
 
 .card .media {
+
   margin-top: 10px;
   margin-bottom: 20px;
   border-radius: 20px;
@@ -231,13 +232,19 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 
 .panel {
-  background: var(--tg-theme-secondary-bg-color)
+  background: var(--tg-theme-secondary-bg-color);
+  display: flex;
+  flex-direction: column;
+
+  
 
 }
 .media .media-body {
-  margin-top: 10px;
+  padding: 10px 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 20px;
+
 }
 .name_mode {
   font-size: 20px;
@@ -248,16 +255,14 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   font-weight: 300;
 }
 .btn {
-  padding: 15px 20px;
+  padding: 10px 10px;
   border: 0px solid #ffffff40;
   color: var(--tg-theme-text-color);
   cursor: pointer;
   border-radius: 20px;
   background: var(--tg-theme-secondary-bg-color);
-  margin-left: 30px;
-  margin-top: 9px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-
+  margin-left: auto;
 }
 .btn:hover {
     background-color: var(--tg-theme-hint-color);
@@ -267,6 +272,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     justify-content: space-between;
     align-items: center;
 }
+
 </style>
 </head>
 <body>
@@ -307,19 +313,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 <div id="Settings" class="tabcontent">
   <div class="settings">
       <button class="accordion">Выбрать личность</button>
-      <div class="panel">
-        <div class="card">
-          <div class="media">
-            <div class="media-body content-align">
-              <div>
-                <h5 class="name_mode">Anna Gibson</h5>
-                <small class="des_mode">Creator</small>
-              </div>
-              <button class="btn btn-primary">Выбрать</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="panel"> </div>
 
       <button class="accordion">Выбор модели SD</button>
       <div class="panel">
@@ -374,6 +368,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         const plan = data.plan;
         const url = new URL(data.photo);
         const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
+        const data_mode = data.data_mode
         document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
         document.getElementById("dat").textContent = `${startDate}`;
@@ -382,6 +377,60 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         document.querySelector('.profile-pic').src = imgUrl;
         document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
+        const panel = document.querySelector('.panel');
+
+        // функция создания новой карточки
+        function createCard(name_mode, des_mode) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="media">
+                  <div class="media-body content-align">
+                    <div>
+                      <h5 class="name_mode">${name_mode}</h5>
+                      <small class="des_mode">${des_mode}</small>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary select-button">Выбрать</button>
+
+                </div>`;
+               return card;
+        }
+
+        // функция добавления карточек в панель
+        function populatePanel() {
+            data_mode.forEach(item => {
+                const card = createCard(item.name_mode, item.des_mode);
+                panel.appendChild(card);
+            });
+        }
+        populatePanel();
+        
+       panel.addEventListener('click', function(event) {
+        let currentlySelectedButton;
+
+        panel.addEventListener('click', function(event) {
+          if (event.target.classList.contains('select-button')) {
+            // Если уже была выбранная кнопка
+            if (currentlySelectedButton) {
+              // Возвращаем ей оригинальный текст и стиль
+              currentlySelectedButton.textContent = 'Выбрать';
+              currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
+              // Если выбранная кнопка сейчас нажата повторно
+              if (currentlySelectedButton === event.target) {
+                alert('Уже выбрано');
+                return;
+              }
+            }
+            // Сохраняем ссылку на выбранную кнопку
+            currentlySelectedButton = event.target;
+            currentlySelectedButton.textContent = 'Выбрано';
+            currentlySelectedButton.style.backgroundColor = 'LawnGreen	'; // или ваш цвет по выбору
+            const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+          }
+        });
+
+		});
     })
     .catch((error) => window.alert('Error: '+ error));
 
@@ -400,6 +449,12 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   }
   
   // Get the element with id="defaultOpen" and click on it
+  
+
+  
+  function showAlert(name_mode) {
+    alert(name_mode);
+  }
   document.getElementById("defaultOpen").click();
   var acc = document.getElementsByClassName("accordion");
   var i;
@@ -415,7 +470,12 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
       }
     });
   }
+  
+  
 </script>
 
 </body>
 </html>
+
+
+
