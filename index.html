@@ -490,17 +490,17 @@ panel_sd.addEventListener('click', function(event) {
         currentlySelectedButtonSd = event.target;
         currentlySelectedButtonSd.textContent = 'Выбрано';
         currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
-
+	
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
   
   
 }); 
     
-    tg.onEvent('mainButtonClicked', function(){
-    tg.showAlert('Уже выбрано');
+tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-
+    tg.showAlert(JSON.stringify(name_mode));
+    tg.sendData(JSON.stringify(name_mode));
 });
     
     
@@ -565,5 +565,3 @@ panel_sd.addEventListener('click', function(event) {
 </script>
 </body>
 </html>
-
-
