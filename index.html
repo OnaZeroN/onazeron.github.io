@@ -397,7 +397,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
                       <small class="des_mode">${des_mode}</small>
                     </div>
                   </div>
-                  <button class="btn btn-primary select-button">Выбрать</button>
+                  <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
 
                 </div>`;
                return card;
@@ -454,7 +454,7 @@ function createSdCard(name_mode, des_mode) {
                     <small class="des_mode">${des_mode}</small>
                 </div>
             </div>
-            <button class="btn btn-primary select-button">Выбрать</button>
+            <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
         </div>`;
     return card;
 }
@@ -490,7 +490,7 @@ panel_sd.addEventListener('click', function(event) {
         currentlySelectedButtonSd = event.target;
         currentlySelectedButtonSd.textContent = 'Выбрано';
         currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
-	
+
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
   
@@ -499,8 +499,8 @@ panel_sd.addEventListener('click', function(event) {
     
 tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-    tg.showAlert(currentlySelectedButton.closest('.media-body.content-align').querySelector('.name_mode').innerText);
-    tg.sendData(name_mode);
+    tg.showAlert(currentlySelectedButton.id);
+    tg.sendData(currentlySelectedButton.id);
 });
     
     
@@ -565,5 +565,3 @@ tg.onEvent('mainButtonClicked', function(){
 </script>
 </body>
 </html>
-
-
