@@ -99,9 +99,14 @@ body, html {
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 .image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   height: 150px;
   width: 150px;
+  top: 50%;
+  left: 27%;
 }
 .image .profile-pic{
   width: 100%;
@@ -127,10 +132,14 @@ span{
   display: flex;
   align-items: center;
   margin-top: 30px;
+  justify-content: center;
+
+
 }
 .row .info{
   text-align: center;
   padding: 0 20px;
+
 }
 
 </style>
@@ -145,7 +154,8 @@ span{
 <div id="Profile" class="tabcontent">
     <div class="profile-card">
     <div class="image">
-		<img src="" alt="" class="profile-pic">    </div>
+		<img src="" alt="" class="profile-pic">
+	</div>
     <div class="data">
       <h2 id="name"></h2>
       <span id="id"></span>
@@ -207,20 +217,20 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-        const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+		const id = tg.initDataUnsafe.user.id;
+        const name = tg.initDataUnsafe.user.first_name
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
-        const url = data.photo;
-        document.getElementById("id").textContent = `${id}`;
+        const url = new URL(data.photo);
+        const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
+        document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
         document.getElementById("dat").textContent = `${startDate}`;
         document.getElementById("plan").textContent = `${plan}`;
         document.getElementById("name").textContent = `${name}`;
-        document.querySelector('.profile-pic').src = `${url}`;
-        window.alert('Error: '+ url)
-		document.querySelector(".loader").style.display = "none";
+        document.querySelector('.profile-pic').src = imgUrl;
+        document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
     })
     .catch((error) => window.alert('Error: '+ error));
