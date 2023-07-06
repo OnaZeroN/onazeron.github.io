@@ -188,7 +188,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.accordion:hover {
+.btn:hover {
     background-color: var(--tg-theme-hint-color);
 }
 
@@ -446,6 +446,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = color;
+    tg.HapticFeedback.selectionChanged()
+
   }
 
   // Get the element with id="defaultOpen" and click on it
@@ -468,6 +470,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
       } else {
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
+      tg.HapticFeedback.selectionChanged()
+
     });
   }
 
@@ -475,5 +479,3 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 </script>
 </body>
 </html>
-
-
