@@ -499,8 +499,8 @@ panel_sd.addEventListener('click', function(event) {
     
 tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy')
-    tg.showAlert(JSON.stringify(name_mode));
-    tg.sendData(JSON.stringify(name_mode));
+    tg.showAlert(name_mode);
+    tg.sendData(name_mode);
 });
     
     
