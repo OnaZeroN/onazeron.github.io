@@ -14,7 +14,7 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: Arial;
-  
+  	background: var(--tg-theme-secondary-bg-color);
 }
 
 /* Style tab links */
@@ -223,7 +223,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   display: flex;
   align-items: left;
   color: var(--tg-theme-text-color);
-    background:	var(--tg-theme-bg-color);
+  background: var(--tg-theme-bg-color);
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 
 }
@@ -235,23 +235,19 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   background: var(--tg-theme-secondary-bg-color);
   display: flex;
   flex-direction: column;
-
-  
-
 }
 .media .media-body {
-  padding: 10px 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
 
 }
 .name_mode {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
 }
 .des_mode {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 300;
 }
 .btn {
@@ -361,8 +357,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   })
     .then(response => response.json())
     .then(data => {
-			const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+			const id = 123;
+        const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -378,7 +374,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
         const panel = document.querySelector('.panel');
-
+        let currentlySelectedButton; 
         // функция создания новой карточки
         function createCard(name_mode, des_mode) {
             const card = document.createElement('div');
@@ -404,35 +400,34 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
                 panel.appendChild(card);
             });
         }
-        populatePanel();
-        
-       panel.addEventListener('click', function(event) {
-        let currentlySelectedButton;
-
-        panel.addEventListener('click', function(event) {
-          if (event.target.classList.contains('select-button')) {
-            // Если уже была выбранная кнопка
-            if (currentlySelectedButton) {
-              // Возвращаем ей оригинальный текст и стиль
-              currentlySelectedButton.textContent = 'Выбрать';
-              currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
-              // Если выбранная кнопка сейчас нажата повторно
-              if (currentlySelectedButton === event.target) {
-                alert('Уже выбрано');
-                return;
-              }
-            }
-            // Сохраняем ссылку на выбранную кнопку
-            currentlySelectedButton = event.target;
-            currentlySelectedButton.textContent = 'Выбрано';
-            currentlySelectedButton.style.backgroundColor = 'LawnGreen	'; // или ваш цвет по выбору
-            const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+    populatePanel();
+    
+    panel.addEventListener('click', function(event) {
+      if (event.target.classList.contains('select-button')) {
+        // Если уже была выбранная кнопка
+        if (currentlySelectedButton) {
+           if (currentlySelectedButton === event.target) {
+            alert('Уже выбрано');
+            return;
           }
-        });
+          // Возвращаем ей оригинальный текст и стиль
+          currentlySelectedButton.textContent = 'Выбрать';
+          currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
 
-		});
-    })
-    .catch((error) => window.alert('Error: '+ error));
+          // Если выбранная кнопка сейчас нажата повторно
+
+        }
+
+        // Сохраняем ссылку на выбранную кнопку
+        currentlySelectedButton = event.target;
+        currentlySelectedButton.textContent = 'Выбрано';
+        currentlySelectedButton.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+
+        const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+      }
+    });
+  })
+  .catch((error) => window.alert('Error: '+ error));
 
   function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
@@ -476,3 +471,6 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 
 </body>
 </html>
+
+
+
