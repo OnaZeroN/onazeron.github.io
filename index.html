@@ -193,7 +193,16 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 
 /* Style the accordion panel. Note: hidden by default */
-.panel {
+.panel{
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+      margin-top: 15px;
+  margin-bottom: 15px;
+}
+.panel_sd{
     padding: 0 18px;
     background-color: white;
     max-height: 0;
@@ -315,7 +324,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
       <div class="panel"> </div>
 
       <button class="accordion">Выбор модели SD</button>
-      <div class="panel">
+      <div class="panel_sd">
       </div>
 
       <button class="accordion">Выбрать чат</button>
@@ -342,7 +351,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
   tg.onEvent('mainButtonClicked', function(){
-  	alert(name_mode)
+  	 window.alert(name_mode_sd);
+       	 window.alert(name_mode);
     tg.sendData(name_mode.stringify);
   });
   document.querySelector('.profile-card').style.display = 'none';
@@ -368,6 +378,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         const url = new URL(data.photo);
         const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
         const data_mode = data.data_mode
+        const data_sd = data.data_sd
         document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
         document.getElementById("dat").textContent = `${startDate}`;
@@ -378,6 +389,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         document.querySelector('.profile-card').style.display = 'block';
         const panel = document.querySelector('.panel');
         let currentlySelectedButton;
+        
         // функция создания новой карточки
         function createCard(name_mode, des_mode) {
             const card = document.createElement('div');
@@ -431,6 +443,66 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
       }
     });
+    
+   const panel_sd = document.querySelector('.panel_sd');
+let currentlySelectedButtonSd;
+        
+// функция создания новой карточки для panel_sd
+function createSdCard(name_mode, des_mode) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="media">
+            <div class="media-body content-align">
+                <div>
+                    <h5 class="name_mode">${name_mode}</h5>
+                    <small class="des_mode">${des_mode}</small>
+                </div>
+            </div>
+            <button class="btn btn-primary select-button">Выбрать</button>
+        </div>`;
+    return card;
+}
+
+// функция добавления карточек в panel_sd
+function populateSdPanel() {
+    data_sd.forEach(item => {
+        const card = createSdCard(item.name_mode, item.des_mode);
+        panel_sd.appendChild(card);
+    });
+}
+
+populateSdPanel();
+
+panel_sd.addEventListener('click', function(event) {
+    if (event.target.classList.contains('select-button')) {
+        // Если уже была выбранная кнопка
+        if (currentlySelectedButtonSd) {
+            if (currentlySelectedButtonSd === event.target) {
+                tg.showAlert('Уже выбрано');
+                tg.HapticFeedback.impactOccurred('heavy')
+                return;
+            }
+            // Возвращаем ей оригинальный текст и стиль
+            currentlySelectedButtonSd.textContent = 'Выбрать';
+            currentlySelectedButtonSd.style.backgroundColor = ''; // или ваш оригинальный цвет
+            
+            // Если выбранная кнопка сейчас нажата повторно
+            tg.HapticFeedback.selectionChanged()
+        }
+
+        // Сохраняем ссылку на выбранную кнопку
+        currentlySelectedButtonSd = event.target;
+        currentlySelectedButtonSd.textContent = 'Выбрано';
+        currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+
+        const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+    }
+}); 
+    
+    
+    
+    
   })
   .catch((error) => window.alert('Error: '+ error));
 
@@ -459,6 +531,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   }
   document.getElementById("defaultOpen").click();
   var acc = document.getElementsByClassName("accordion");
+  var acc_sd = document.getElementsByClassName("panel_sd");
   var i;
 
   for (i = 0; i < acc.length; i++) {
@@ -471,7 +544,19 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
       tg.HapticFeedback.selectionChanged()
+    });
+  }
 
+  for (i = 0; i < acc_sd.length; i++) {
+    acc_sd[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight){
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+      tg.HapticFeedback.selectionChanged()
     });
   }
 
