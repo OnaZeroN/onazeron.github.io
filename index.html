@@ -493,9 +493,15 @@ panel_sd.addEventListener('click', function(event) {
 
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
+  
+  
 }); 
     
-    
+    tg.onEvent('mainButtonClicked', function(){
+    tg.showAlert('Уже выбрано');
+    tg.HapticFeedback.impactOccurred('heavy')
+
+});
     
     
   })
@@ -554,11 +560,7 @@ panel_sd.addEventListener('click', function(event) {
       tg.HapticFeedback.selectionChanged()
     });
   }
-tg.onEvent('mainButtonClicked', function(){
-    tg.showAlert('Уже выбрано');
-    tg.HapticFeedback.impactOccurred('heavy')
 
-});
 
 </script>
 </body>
