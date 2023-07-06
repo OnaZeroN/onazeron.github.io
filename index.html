@@ -14,6 +14,7 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: Arial;
+  
 }
 
 /* Style tab links */
@@ -25,7 +26,7 @@ body, html {
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
-    font-size: 17px;
+    font-size: 20px;
     width: 25%;
 }
 
@@ -41,27 +42,136 @@ body, html {
     height: 100%;
 }
 
-#Profile {background-color: var(--tg-theme-bg-color);}
-#Settings {background-color: var(--tg-theme-bg-color);}
-#Shop {background-color: var(--tg-theme-bg-color);}
-#About {background-color: var(--tg-theme-bg-color);}
+#Profile {background-color: var(--tg-theme-secondary-bg-color);}
+#Settings {background-color: var(--tg-theme-secondary-bg-color);}
+#Shop {background-color: var(--tg-theme-secondary-bg-color);}
+#About {background-color: var(--tg-theme-secondary-bg-color);}
+  
+.loader {
+    border: 13px solid #f3f3f3; /* Light grey */
+    border-top: 13px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+
+    animation: spin 2s linear infinite;
+    margin: auto;
+ 
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.main{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(images/back.jpg);
+  background-position: center;
+  background-size: cover;
+}
+.profile-card{
+  background:	var(--tg-theme-bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 25px;
+  padding: 30px;
+  color: var(--tg-theme-text-color);
+  border: 1px solid #ffffff40;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.image{
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+.image .profile-pic{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+.data h2{
+  font-size: 33px;
+  font-weight: 600;
+}
+span{
+  font-size: 18px;
+}
+.row{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.row .info{
+  text-align: center;
+  padding: 0 20px;
+}
+
 </style>
 </head>
 <body>
 
-<button class="tablink" onclick="openPage('Profile', this, 'var(--tg-theme-bg-color)')" id="defaultOpen" >Profile</button>
-<button class="tablink" onclick="openPage('Settings', this, 'var(--tg-theme-bg-color)')">Settings</button>
-<button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-bg-color)')">Shop</button>
-<button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-bg-color)')">About</button>
+<button class="tablink" onclick="openPage('Profile', this, 'var(--tg-theme-secondary-bg-color)')" id="defaultOpen" >Profile</button>
+<button class="tablink" onclick="openPage('Settings', this, 'var(--tg-theme-secondary-bg-color)')">Settings</button>
+<button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-secondary-bg-color)')">Shop</button>
+<button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-secondary-bg-color)')">About</button>
 
 <div id="Profile" class="tabcontent">
-  <h3>Profile</h3>
-  <h2 id="id">Loading</h2>
+    <div class="profile-card">
+    <div class="image">
+      <img url="images/profile.jpg" alt="" class="profile-pic">
+    </div>
+    <div class="data">
+      <h2 id="name"></h2>
+      <span id="id"></span>
+    </div>
+    <div class="row">
+      <div class="info">
+        <h3>Date</h3>
+        <span id="dat"></span>
+      </div>
+      <div class="info">
+        <h3>Requests</h3>
+        <span id="req"></span>
+      </div>
+      <div class="info">
+        <h3>Plan</h3>
+        <span id="plan"></span>
+      </div>
+    </div>
+  </div>
+  <div class="loader"></div>
 </div>
 
 <div id="Settings" class="tabcontent">
   <h3>Settings</h3>
-  <p>Some news this fine day!</p> 
+  <p>Some news this fine day!</p>
 </div>
 
 <div id="Shop" class="tabcontent">
@@ -77,12 +187,7 @@ body, html {
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
-  let url = 'https://c580-80-91-24-243.ngrok-free.app';
-  let data = {
-    id: 1,
-    requests: 10,
-    start_date: '2020-01-01',
-  }
+  let url = 'https://46da-80-91-24-243.ngrok-free.app';
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
@@ -94,7 +199,7 @@ body, html {
     method: 'POST',
     body: JSON.stringify({
       'method': 'GetUserData',
-      'id': '1'
+      'id': '12341234'
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
@@ -102,14 +207,22 @@ body, html {
   })
     .then(response => response.json())
     .then(data => {
-        const id = data.id;
+        const id = tg.initDataUnsafe.user.id;
+        const name = tg.initDataUnsafe.user.first_name;
         const requests = data.requests;
         const startDate = data.start_date;
-        document.getElementById("id").textContent = `ID: ${id}\n\nRequests: ${requests}\n\nStart Date: ${startDate}`;
-
+        const plan = data.paln;
+        const url = tg.initDataUnsafe.user.photo_url;
+        document.getElementById("id").textContent = `${id}`;
+        document.getElementById("req").textContent = `${requests}`;
+        document.getElementById("dat").textContent = `${startDate}`;
+        document.getElementById("plan").textContent = `${plan}`;
+        document.getElementById("name").textContent = `${name}`;
+        document.getElementById("url").textContent = `${url}`;
+		document.querySelector(".loader").style.display = "none";
     })
     .catch((error) => window.alert('Error: '+ error));
-  
+
   function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -122,12 +235,12 @@ body, html {
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = color;
-
   }
+  
   // Get the element with id="defaultOpen" and click on it
   document.getElementById("defaultOpen").click();
-  
+
 </script>
-     
+
 </body>
-</html> 
+</html>
