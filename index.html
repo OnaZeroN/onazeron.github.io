@@ -145,8 +145,7 @@ span{
 <div id="Profile" class="tabcontent">
     <div class="profile-card">
     <div class="image">
-      <img url="images/profile.jpg" alt="" class="profile-pic">
-    </div>
+		<img src="" alt="" class="profile-pic">    </div>
     <div class="data">
       <h2 id="name"></h2>
       <span id="id"></span>
@@ -194,7 +193,8 @@ span{
   tg.onEvent('mainButtonClicked', function(){
     tg.sendData("some string that we need to send");
   });
-  
+  document.querySelector('.profile-card').style.display = 'none';
+
   fetch(url, {
     method: 'POST',
     body: JSON.stringify({
@@ -218,8 +218,9 @@ span{
         document.getElementById("dat").textContent = `${startDate}`;
         document.getElementById("plan").textContent = `${plan}`;
         document.getElementById("name").textContent = `${name}`;
-        document.getElementById("url").textContent = `${url}`;
+        document.querySelector('.profile-pic').src = `${url}`;
 		document.querySelector(".loader").style.display = "none";
+        document.querySelector('.profile-card').style.display = 'block';
     })
     .catch((error) => window.alert('Error: '+ error));
 
