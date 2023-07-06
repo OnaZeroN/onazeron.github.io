@@ -142,6 +142,123 @@ span{
 
 }
 
+shadow: 0 5px 20px rgba(0,0,0,0.4);
+
+.mode_list{
+  width: 190%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(images/back.jpg);
+  background-position: center;
+  background-size: cover;
+}
+.mode_card{
+  background:	var(--tg-theme-bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 25px;
+  padding: 30px;
+  color: var(--tg-theme-text-color);
+  border: 1px solid #ffffff40;
+}
+
+.accordion {
+    font-size: 23px;
+    font-weight: 600;    
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    background:	var(--tg-theme-bg-color);
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border-radius: 25px;
+    color: var(--tg-theme-text-color);
+    border: 1px solid #ffffff40;
+    margin-bottom: 20px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+    background-color: var(--tg-theme-hint-color);
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 20px;
+    color: #777;
+    float: right;
+    margin-left: 330px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+
+.mode {
+  padding: 18px;
+  width: 80%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  background:	var(--tg-theme-bg-color);
+  display: flex;
+  max-width: 400px;
+  border-radius: 20px;
+  color: var(--tg-theme-text-color);
+  border: 1px solid #ffffff40;
+  margin-bottom: 20px;
+  align-items: left;
+
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.card .media {
+  display: flex;
+  align-items: center;
+}
+.media img {
+  width: 50px;
+}
+.media .media-body {
+  margin-left: 15px;
+}
+.name_mode {
+  font-size: 20px;
+  font-weight: 600;
+}
+.des_mode {
+  font-size: 20px;
+  font-weight: 300;
+}
+.btn {
+  border: 0px solid #ffffff40;
+  color: var(--tg-theme-text-color);
+  cursor: pointer;
+  border-radius: 20px;
+  background: var(--tg-theme-bg-color);
+  margin-left: 120px;
+}
 </style>
 </head>
 <body>
@@ -150,6 +267,7 @@ span{
 <button class="tablink" onclick="openPage('Settings', this, 'var(--tg-theme-secondary-bg-color)')">Settings</button>
 <button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-secondary-bg-color)')">Shop</button>
 <button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-secondary-bg-color)')">About</button>
+<div class="loader"></div>
 
 <div id="Profile" class="tabcontent">
     <div class="profile-card">
@@ -175,13 +293,44 @@ span{
       </div>
     </div>
   </div>
-  <div class="loader"></div>
 </div>
 
+
 <div id="Settings" class="tabcontent">
-  <h3>Settings</h3>
-  <p>Some news this fine day!</p>
-</div>
+  <div class="settings">
+      <button class="accordion">Выбрать личность</button>
+      <div class="panel">
+			
+        <div class="mode float-left">
+          <div class="card">
+            <div class="media">
+              <img src="https://imgur.com/ZnxJ2SY.png" class="mr-3">
+              <div class="media-body">
+                <h5 class="name_mode">Anna Gibson</h5>
+                <div class="d-flex flex-row justify-content-between align-text-center">
+                  <small class="des_mode">Creator</small>
+                  <button class="btn">Выбрать</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+            
+            
+      </div>
+
+      <button class="accordion">Выбор модели SD</button>
+      <div class="panel">
+        <p>Lorem ipsum...</p>
+      </div>
+
+      <button class="accordion">Выбрать чат</button>
+      <div class="panel">
+        <p>Lorem ipsum...</p>
+      </div>
+  </div>
 
 <div id="Shop" class="tabcontent">
   <h3>Shop</h3>
@@ -205,6 +354,7 @@ span{
   });
   document.querySelector('.profile-card').style.display = 'none';
 
+
   fetch(url, {
     method: 'POST',
     body: JSON.stringify({
@@ -217,8 +367,8 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-		const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name
+		const id = '123';
+        const name = 'stepa';
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -251,7 +401,20 @@ span{
   
   // Get the element with id="defaultOpen" and click on it
   document.getElementById("defaultOpen").click();
+  var acc = document.getElementsByClassName("accordion");
+  var i;
 
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight){
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
 </script>
 
 </body>
