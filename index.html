@@ -316,7 +316,6 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 
       <button class="accordion">Выбор модели SD</button>
       <div class="panel">
-        <p>Lorem ipsum...</p>
       </div>
 
       <button class="accordion">Выбрать чат</button>
@@ -343,7 +342,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
   tg.onEvent('mainButtonClicked', function(){
-    tg.sendData(name_mode);
+  	alert(name_mode)
+    tg.sendData(name_mode.stringify);
   });
   document.querySelector('.profile-card').style.display = 'none';
 
