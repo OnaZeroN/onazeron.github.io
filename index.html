@@ -270,7 +270,7 @@ span{
     background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 10.5px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
-    background: var(--tg-theme-secondary-bg-color);
+    background-color: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
     width: 100%; /* Full-width */
@@ -284,7 +284,7 @@ span{
     background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 10.5px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
-    background: var(--tg-theme-secondary-bg-color);
+    background-color: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
     width: 100%; /* Full-width */
@@ -400,6 +400,7 @@ span{
         const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
         const data_mode = data.data_mode
         const data_sd = data.data_sd
+        window.alert(tg.ThemeParams.hint_color)
         document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
         document.getElementById("dat").textContent = `${startDate}`;
@@ -469,7 +470,7 @@ populatePanel();
           // Возвращаем ей оригинальный текст и стиль
           currentlySelectedButton.textContent = 'Выбрать';
     
-          currentlySelectedButton.style.backgroundColor = tg.ThemeParams.button_color; // или ваш оригинальный цвет
+          currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
 
           // Если выбранная кнопка сейчас нажата повторно
           tg.HapticFeedback.selectionChanged()
@@ -556,7 +557,6 @@ panel_sd.addEventListener('click', function(event) {
         currentlySelectedButtonSd = event.target;
         currentlySelectedButtonSd.textContent = 'Выбрано';
         currentlySelectedButtonSd.style.backgroundColor = tg.ThemeParams.hint_color; // или ваш цвет по выбору
-
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
     }); 
