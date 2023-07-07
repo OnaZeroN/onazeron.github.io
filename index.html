@@ -166,11 +166,11 @@ span{
 }
 
 .accordion {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 600;
     cursor: pointer;
-    padding: 18px;
-    width: 100%;
+    padding: 20px;
+    width: 90%;
     text-align: left;
     border: none;
     outline: none;
@@ -178,7 +178,7 @@ span{
     background:	var(--tg-theme-button-color);
     display: flex;
     flex-direction: column;
-    border-radius: 25px;
+    border-radius: 20px;
     color: var(--tg-theme-button-text-color);
     margin-top: 20px;
     margin-bottom: 20px;
@@ -211,17 +211,7 @@ span{
   margin-bottom: 15px;
 }
 
-.accordion:after {
-    content: '\02795'; /* Unicode character for "plus" sign (+) */
-    font-size: 20px;
-    color: #777;
-    float: right;
-    margin-left: 315px;
-}
 
-.active:after {
-    content: "\2796"; /* Unicode character for "minus" sign (-) */
-}
 
 
 .card .media {
@@ -266,7 +256,7 @@ span{
     color: var(--tg-theme-text-color);
     cursor: pointer;
     border-radius: 20px;
-    background: var(--tg-theme-button-text-color);
+    background-color: var(--tg-theme-button-text-color);
     box-shadow: 0 3px 5px rgba(0,0,0,0.4);
     margin-left: auto;
 }
@@ -282,24 +272,28 @@ span{
     background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 10.5px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
+    background: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
     width: 100%; /* Full-width */
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
+    margin-top: 12px; /* Add some space below the input */
     margin-bottom: 12px; /* Add some space below the input */
 }
 #myInputsd {
     background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 10.5px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
+    background: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
     width: 100%; /* Full-width */
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
+    margin-top: 12px; /* Add some space below the input */
     margin-bottom: 12px; /* Add some space below the input */
 }
 </style>
@@ -613,10 +607,9 @@ panel_sd.addEventListener('click', function(event) {
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
       tg.HapticFeedback.selectionChanged()
-      window.alert('123')
-
     });
   }
 </script>
 </body>
 </html>
+
