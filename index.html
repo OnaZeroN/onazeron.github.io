@@ -141,7 +141,6 @@ span{
 
 }
 
-shadow: 0 5px 20px rgba(0,0,0,0.4);
 
 .mode_list{
   width: 190%;
@@ -176,11 +175,11 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     border: none;
     outline: none;
     transition: 0.4s;
-    background:	var(--tg-theme-bg-color);
+    background:	var(--tg-theme-button-color);
     display: flex;
     flex-direction: column;
     border-radius: 25px;
-    color: var(--tg-theme-text-color);
+    color: var(--tg-theme-button-text-color);
     margin-top: 20px;
     margin-bottom: 20px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.4);
@@ -263,14 +262,13 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 .btn {
     padding: 0 18px;
-
-  border: 0px solid #ffffff40;
-  color: var(--tg-theme-text-color);
-  cursor: pointer;
-  border-radius: 20px;
-  background: var(--tg-theme-secondary-bg-color);
-  box-shadow: 0 3px 5px rgba(0,0,0,0.4);
-  margin-left: auto;
+    border: 0px solid #ffffff40;
+    color: var(--tg-theme-text-color);
+    cursor: pointer;
+    border-radius: 20px;
+    background: var(--tg-theme-button-text-color);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.4);
+    margin-left: auto;
 }
 .btn:hover {
     background-color: var(--tg-theme-hint-color);
@@ -280,7 +278,30 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
     justify-content: space-between;
     align-items: center;
 }
-
+#myInput {
+    background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 10.5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    border-radius: 20px;
+    color: var(--tg-theme-hint-color);
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+#myInputsd {
+    background-image: url('https://html5css.ru/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 10.5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    border-radius: 20px;
+    color: var(--tg-theme-hint-color);
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
 </style>
 </head>
 <body>
@@ -321,11 +342,23 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 <div id="Settings" class="tabcontent">
   <div class="settings">
       <button class="accordion">Выбрать личность</button>
-      <div class="panel"> </div>
+
+      <div class="panel"> 
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Найти личность..">
+        <ul id="myUL" class="list">
+
+        </ul>
+      </div>
 
       <button class="accordion">Выбор модели SD</button>
-      <div class="panel_sd">
-      </div>
+
+        <div class="panel_sd">
+            <input type="text" id="myInputsd" onkeyup="myFunction()" placeholder="Найти модель..">
+            <ul id="myULsd" class="list_sd">
+    
+            </ul>
+        </div>
+
 
       <button class="accordion">Выбрать чат</button>
       <div class="panel">
@@ -346,7 +379,7 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
-  let url = 'https://46da-80-91-24-243.ngrok-free.app';
+  let url = 'https://5679-80-91-24-243.ngrok-free.app';
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
@@ -365,8 +398,8 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
   })
     .then(response => response.json())
     .then(data => {
-		const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+		const id = 123;
+        const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -382,35 +415,54 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         document.querySelector('.profile-pic').src = imgUrl;
         document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
-        const panel = document.querySelector('.panel');
+        const panel = document.querySelector('.list');
+        const input = document.querySelector('#myInput');
         let currentlySelectedButton;
-        
+
         // функция создания новой карточки
         function createCard(name_mode, des_mode) {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
                 <div class="media">
-                  <div class="media-body content-align">
+                <div class="media-body content-align">
                     <div>
-                      <h5 class="name_mode">${name_mode}</h5>
-                      <small class="des_mode">${des_mode}</small>
+                    <h5 class="name_mode">${name_mode}</h5>
+                    <small class="des_mode">${des_mode}</small>
                     </div>
-                  </div>
-                  <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
-
+                </div>
+                <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
                 </div>`;
-               return card;
+            return card;
         }
 
-        // функция добавления карточек в панель
-        function populatePanel() {
-            data_mode.forEach(item => {
-                const card = createCard(item.name_mode, item.des_mode);
-                panel.appendChild(card);
-            });
+// функция добавления карточек в панель
+function populatePanel() {
+    data_mode.forEach(item => {
+        const card = createCard(item.name_mode, item.des_mode);
+        panel.appendChild(card);
+    });
+}
+
+// функция фильтрации карточек
+function filterCards() {
+    const filter = input.value.toUpperCase();
+    const cards = panel.getElementsByClassName('card');
+
+    for (let i = 0; i < cards.length; i++) {
+        const name = cards[i].getElementsByClassName("name_mode")[0];
+        if (name.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none";
         }
-    populatePanel();
+    }
+}
+
+input.addEventListener('keyup', filterCards);
+
+
+populatePanel();
 
     panel.addEventListener('click', function(event) {
       if (event.target.classList.contains('select-button')) {
@@ -433,14 +485,19 @@ shadow: 0 5px 20px rgba(0,0,0,0.4);
         // Сохраняем ссылку на выбранную кнопку
         currentlySelectedButton = event.target;
         currentlySelectedButton.textContent = 'Выбрано';
-        currentlySelectedButton.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+        currentlySelectedButton.style.backgroundColor = tg.ThemeParams.hint_color;// или ваш цвет по выбору
 
         const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
       }
     });
     
+
+
+
+
    const panel_sd = document.querySelector('.panel_sd');
-let currentlySelectedButtonSd;
+   const input_sd = document.querySelector('#myInputsd');
+   let currentlySelectedButtonSd;
         
 // функция создания новой карточки для panel_sd
 function createSdCard(name_mode, des_mode) {
@@ -467,6 +524,21 @@ function populateSdPanel() {
     });
 }
 
+function filterCards_sd() {
+    const filter_sd = input_sd.value.toUpperCase();
+    const cards_sd = panel_sd.getElementsByClassName('card');
+    for (let i = 0; i < cards_sd.length; i++) {
+        const name = cards_sd[i].getElementsByClassName("name_mode")[0];
+        if (name.innerHTML.toUpperCase().indexOf(filter_sd) > -1) {
+            cards_sd[i].style.display = "";
+        } else {
+            cards_sd[i].style.display = "none";
+        }
+    }
+}
+
+input_sd.addEventListener('keyup', filterCards_sd);
+
 populateSdPanel();
 
 panel_sd.addEventListener('click', function(event) {
@@ -489,19 +561,17 @@ panel_sd.addEventListener('click', function(event) {
         // Сохраняем ссылку на выбранную кнопку
         currentlySelectedButtonSd = event.target;
         currentlySelectedButtonSd.textContent = 'Выбрано';
-        currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+        currentlySelectedButtonSd.style.backgroundColor = tg.ThemeParams.hint_color; // или ваш цвет по выбору
 
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
-  
-  
-}); 
-    
-tg.onEvent('mainButtonClicked', function(){
-    tg.HapticFeedback.impactOccurred('heavy')
-    tg.sendData(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}`);
-});
-    
+    }); 
+        
+    tg.onEvent('mainButtonClicked', function(){
+        tg.HapticFeedback.impactOccurred('heavy')
+        tg.sendData(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}`);
+    });
+
     
   })
   .catch((error) => window.alert('Error: '+ error));
@@ -531,7 +601,6 @@ tg.onEvent('mainButtonClicked', function(){
   }
   document.getElementById("defaultOpen").click();
   var acc = document.getElementsByClassName("accordion");
-  var acc_sd = document.getElementsByClassName("panel_sd");
   var i;
 
   for (i = 0; i < acc.length; i++) {
@@ -544,25 +613,10 @@ tg.onEvent('mainButtonClicked', function(){
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
       tg.HapticFeedback.selectionChanged()
+      window.alert('123')
+
     });
   }
-
-  for (i = 0; i < acc_sd.length; i++) {
-    acc_sd[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var panel = this.nextElementSibling;
-      if (panel.style.maxHeight){
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      }
-      tg.HapticFeedback.selectionChanged()
-    });
-  }
-
-
 </script>
 </body>
 </html>
-
-
