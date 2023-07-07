@@ -392,6 +392,7 @@ span{
   })
     .then(response => response.json())
     .then(data => {
+        let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
 		const id = 123;
         const name = 123;
         const requests = data.requests;
