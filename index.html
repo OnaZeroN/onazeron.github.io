@@ -187,9 +187,7 @@ span{
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.btn:hover {
-    background-color: var(--tg-theme-hint-color);
-}
+
 
 /* Style the accordion panel. Note: hidden by default */
 .panel{
@@ -252,7 +250,6 @@ span{
 }
 .btn {
     padding: 0 18px;
-    border: 0px solid #ffffff40;
     color: var(--tg-theme-text-color);
     cursor: pointer;
     border-radius: 20px;
@@ -470,7 +467,8 @@ populatePanel();
           }
           // Возвращаем ей оригинальный текст и стиль
           currentlySelectedButton.textContent = 'Выбрать';
-          currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
+    
+          currentlySelectedButton.style.backgroundColor = tg.ThemeParams.button_color; // или ваш оригинальный цвет
 
           // Если выбранная кнопка сейчас нажата повторно
           tg.HapticFeedback.selectionChanged()
