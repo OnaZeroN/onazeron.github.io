@@ -400,7 +400,7 @@ span{
         const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
         const data_mode = data.data_mode
         const data_sd = data.data_sd
-        window.alert(tg.ThemeParams.hint_color)
+        // window.alert(tg.ThemeParams.hint_color)
         document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
         document.getElementById("dat").textContent = `${startDate}`;
@@ -480,7 +480,7 @@ populatePanel();
         // Сохраняем ссылку на выбранную кнопку
         currentlySelectedButton = event.target;
         currentlySelectedButton.textContent = 'Выбрано';
-        currentlySelectedButton.style.backgroundColor = tg.ThemeParams.hint_color;// или ваш цвет по выбору
+        currentlySelectedButton.style.backgroundColor = 'LimeGreen';// или ваш цвет по выбору
 
         const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
       }
@@ -556,7 +556,7 @@ panel_sd.addEventListener('click', function(event) {
         // Сохраняем ссылку на выбранную кнопку
         currentlySelectedButtonSd = event.target;
         currentlySelectedButtonSd.textContent = 'Выбрано';
-        currentlySelectedButtonSd.style.backgroundColor = tg.ThemeParams.hint_color; // или ваш цвет по выбору
+        currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
     }
     }); 
