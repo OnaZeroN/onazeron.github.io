@@ -59,7 +59,7 @@ body, html {
 
     position: absolute;
     top: 40%;
-    left: 40%;
+    left: 38%;
     transform: translate(-50%, -50%);
 }
 
@@ -234,6 +234,11 @@ span{
   display: flex;
   flex-direction: column;
 }
+.panel_shop {
+  background: var(--tg-theme-secondary-bg-color);
+  display: flex;
+  flex-direction: column;
+}
 .media .media-body {
   margin-top: 11px;
   margin-bottom: 11px;
@@ -292,6 +297,7 @@ span{
     margin-top: 12px; /* Add some space below the input */
     margin-bottom: 12px; /* Add some space below the input */
 }
+
 </style>
 </head>
 <body>
@@ -300,7 +306,28 @@ span{
 <button class="tablink" onclick="openPage('Settings', this, 'var(--tg-theme-secondary-bg-color)')">Settings</button>
 <button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-secondary-bg-color)')">Shop</button>
 <button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-secondary-bg-color)')">About</button>
+
 <div class="loader"></div>
+<div id="Shop" class="tabcontent">
+  <div class="panel_shop"> 
+    <div class="card">
+        <div class="media">
+          <div class="media-body content-align">
+              <div>
+              <h5 class="name_mode">1</h5>
+              <small class="des_mode">1</small>
+              </div>
+          </div>
+          <button class="btn btn-primary select-button" id='123'>Выбрать</button>
+          </div>
+    </div>
+  </div>
+</div>
+
+<div id="About" class="tabcontent">
+  <h3>About</h3>
+  <p>Who we are and what we do.</p>
+</div>
 
 <div id="Profile" class="tabcontent">
     <div class="profile-card">
@@ -344,11 +371,8 @@ span{
 
         <div class="panel_sd">
             <input type="text" id="myInputsd" onkeyup="myFunction()" placeholder="Найти модель..">
-            <ul id="myULsd" class="list_sd">
-    
-            </ul>
+            <ul id="myULsd" class="list_sd"></ul>
         </div>
-
 
       <button class="accordion">Выбрать чат</button>
       <div class="panel">
@@ -356,24 +380,16 @@ span{
       </div>
   </div>
 
-<div id="Shop" class="tabcontent">
-  <h3>Shop</h3>
-  <p>Get in touch, or swing by for a cup of coffee.</p>
-</div>
-
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
-</div>
 
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
-  let url = ' https://de9a-80-91-24-243.ngrok-free.app';
+  let url = 'https://75a5-80-91-24-243.ngrok-free.app';
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
   document.querySelector('.profile-card').style.display = 'none';
+  document.getElementById('Shop').style.display = "block";
 
 
   fetch(url, {
@@ -388,8 +404,8 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-	const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+	      const id = 123;
+        const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -586,11 +602,11 @@ panel_sd.addEventListener('click', function(event) {
   // Get the element with id="defaultOpen" and click on it
 
 
+  document.getElementById("defaultOpen").click();
 
   function showAlert(name_mode) {
     alert(name_mode);
   }
-  document.getElementById("defaultOpen").click();
   var acc = document.getElementsByClassName("accordion");
   var i;
 
