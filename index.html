@@ -820,8 +820,6 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
   }
   tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy');
-    tg.showAlert(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}:${deletedIds}:${currentlySelectedButtonCh.id}`);
-
     fetch(url, {
     method: 'POST',
     body: JSON.stringify({
@@ -836,7 +834,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     }
   })
     .then(response => response.json())
-    .catch(error => window.alert('Возникла ошибка:', error));
+    .catch((error) => window.alert('Error: '+ error));  
 });
 
 </script>
