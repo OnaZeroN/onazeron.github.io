@@ -789,6 +789,7 @@ tg.onEvent('mainButtonClicked', function(){
     }
   })
     .then(response => response.json())
+    .catch(error => console.error('Возникла ошибка:', error));
 });
     
   })
