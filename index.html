@@ -836,7 +836,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     }
   })
     .then(response => response.json())
-    .catch(error => console.error('Возникла ошибка:', error));
+    .catch(error => window.alert('Возникла ошибка:', error));
 });
 
 </script>
