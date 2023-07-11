@@ -773,10 +773,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
 
     tg.onEvent('mainButtonClicked', function(){
     tg.HapticFeedback.impactOccurred('heavy');
-    tg.showAlert(currentlySelectedButtonSd.id);
-    tg.showAlert(currentlySelectedButton.id,);
-    tg.showAlert(deletedIds);
-    tg.showAlert(currentlySelectedButtonCh.id);
+    tg.showAlert(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}:${deletedIds}:${currentlySelectedButtonCh.id}`);
 
     fetch(url, {
     method: 'POST',
