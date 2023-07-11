@@ -749,13 +749,17 @@ panel_ch.addEventListener('click', function(event) {
 
 document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     var isConfirmed = false;
-
-    button.addEventListener('click', function(e) {
-        if (!isConfirmed) {
-            this.focus();
-            this.querySelector('span').innerText = 'CONFIRM DELETE';
-            isConfirmed = true;
-        } else {
+    button.addEventListener('click', handleClick);
+    button.addEventListener('touchend', function(e) {
+    e.preventDefault(); // prevent the mouse event from firing if touch worked
+    handleClick.call(this, e);
+    });
+    function handleClick(e) {
+    if (!isConfirmed) {
+        this.focus();
+        this.querySelector('span').innerText = 'CONFIRM DELETE';
+        isConfirmed = true;
+    } else {
             var deleteContainer = this.parentNode;
             
             // Add the ID of the deleteContainer to the deletedIds array
@@ -767,7 +771,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
             }, 500); // should be the same as your CSS animation duration
         }
         e.preventDefault(); // prevent loss of focus 
-    });
+    };
 
     // Reset the state and text when the button loses focus
     button.addEventListener('blur', function() {
