@@ -771,26 +771,6 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
         this.querySelector('span').innerText = 'DELETE';
     });
 
-    tg.onEvent('mainButtonClicked', function(){
-    tg.HapticFeedback.impactOccurred('heavy');
-    tg.showAlert(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}:${deletedIds}:${currentlySelectedButtonCh.id}`);
-
-    fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      'method': 'SendData',
-      'sd_model': currentlySelectedButtonSd.id, 
-      'gpt_mode': currentlySelectedButton.id,
-      'del_chat': deletedIds,
-      'chat': currentlySelectedButtonCh.id
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-    .then(response => response.json())
-    .catch(error => console.error('Возникла ошибка:', error));
-});
 });
 
 
@@ -838,7 +818,26 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
       tg.HapticFeedback.selectionChanged()
     });
   }
+  tg.onEvent('mainButtonClicked', function(){
+    tg.HapticFeedback.impactOccurred('heavy');
+    tg.showAlert(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}:${deletedIds}:${currentlySelectedButtonCh.id}`);
 
+    fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      'method': 'SendData',
+      'sd_model': `${currentlySelectedButtonSd.id}`, 
+      'gpt_mode': `${currentlySelectedButton.id}`,
+      'del_chat': `${deletedIds}`,
+      'chat': `${currentlySelectedButtonCh.id}`
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then(response => response.json())
+    .catch(error => console.error('Возникла ошибка:', error));
+});
 
 </script>
 </body>
