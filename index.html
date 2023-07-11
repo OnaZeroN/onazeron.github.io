@@ -4,6 +4,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!-- Загрузка шрифта Montserrat -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -209,7 +211,17 @@ span{
   margin-bottom: 15px;
 }
 
+.panel_ch{
+    padding: 0 18px;
+    background: var(--tg-theme-secondary-bg-color);
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: row;
 
+    transition: max-height 0.2s ease-out;
+      margin-top: 15px;
+  margin-bottom: 15px;
+}
 
 
 .card .media {
@@ -220,6 +232,7 @@ span{
   width: 90%;
   display: flex;
   align-items: left;
+
   color: var(--tg-theme-text-color);
   background: var(--tg-theme-bg-color);
   box-shadow: 0 3px 10px rgba(0,0,0,0.4);
@@ -277,9 +290,9 @@ span{
     background-color: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
-    width: 100%; /* Full-width */
+    width: 70%; /* Full-width */
     font-size: 16px; /* Increase font-size */
-    padding: 12px 20px 12px 40px; /* Add some padding */
+    padding: 12px 20px 12px 15px; /* Add some padding */
     border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
     margin-top: 12px; /* Add some space below the input */
     margin-bottom: 12px; /* Add some space below the input */
@@ -290,14 +303,62 @@ span{
     background-color: var(--tg-theme-secondary-bg-color);
     border-radius: 20px;
     color: var(--tg-theme-hint-color);
-    width: 100%; /* Full-width */
+    width: 70%; /* Full-width */
     font-size: 16px; /* Increase font-size */
-    padding: 12px 20px 12px 40px; /* Add some padding */
+    padding: 12px 20px 12px 15px; /* Add some padding */
     border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
     margin-top: 12px; /* Add some space below the input */
     margin-bottom: 12px; /* Add some space below the input */
 }
+#myInputch {
+    background-position: 10px 10.5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    background-color: var(--tg-theme-secondary-bg-color);
+    border-radius: 20px;
+    color: var(--tg-theme-hint-color);
+    width: 70%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 15px; /* Add some padding */
+    border: 3px solid var(--tg-theme-hint-color); /* Add a grey border */
+    margin-top: 12px; /* Add some space below the input */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+.close-icon {
+  height: 30px;
+  width: 30px;
+  display: block;
+  position: relative;
+  left: 5%;
+  transform: translate(-50%,-50%);
+  stroke: #fff;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-left: 10px;
+  transition: 0.5s cubic-bezier(0.165, 0.775, 0.145, 1.020);
+}
+.close-icon .circle {
+    opacity:0.2;
+}
+.close-icon:hover .circle {
+    opacity:0.1;
+}
+.close-icon .progress  {
+    opacity:0;
+}
 
+.close-icon:hover .progress {
+    opacity:1;
+}
+.progress {
+    transition:0.5s;
+}
+.close-icon .progress {
+    stroke-dasharray:1,120;
+}
+.close-icon:active .progress {
+    stroke-dasharray:120,120;
+    transition:3s cubic-bezier(0.165, 0.775, 0.145, 1.020);
+}
 </style>
 </head>
 <body>
@@ -374,13 +435,13 @@ span{
             <ul id="myULsd" class="list_sd"></ul>
         </div>
 
-      <button class="accordion">Выбрать чат</button>
-      <div class="panel">
-        <p>12312</p>
-      </div>
+        <button class="accordion">Выбрать чат</button>
+
+        <div class="panel_ch">
+          <input type="text" id="myInputch" onkeyup="myFunction()" placeholder="Найти чат..">
+          <ul id="myULch" class="list_ch"></ul>
+        </div>
   </div>
-
-
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
@@ -413,6 +474,8 @@ span{
         const imgUrl = decodeURIComponent(url.searchParams.get('img_url'));
         const data_mode = data.data_mode
         const data_sd = data.data_sd
+        const data_ch = data.chats
+
         // window.alert(tg.ThemeParams.hint_color)
         document.getElementById("id").textContent = `ID ${id}`;
         document.getElementById("req").textContent = `${requests}`;
@@ -443,137 +506,220 @@ span{
             return card;
         }
 
-// функция добавления карточек в панель
-function populatePanel() {
-    data_mode.forEach(item => {
-        const card = createCard(item.name_mode, item.des_mode);
-        panel.appendChild(card);
-    });
-}
-
-// функция фильтрации карточек
-function filterCards() {
-    const filter = input.value.toUpperCase();
-    const cards = panel.getElementsByClassName('card');
-
-    for (let i = 0; i < cards.length; i++) {
-        const name = cards[i].getElementsByClassName("name_mode")[0];
-        if (name.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            cards[i].style.display = "";
-        } else {
-            cards[i].style.display = "none";
-        }
-    }
-}
-
-input.addEventListener('keyup', filterCards);
-
-
-populatePanel();
-
-    panel.addEventListener('click', function(event) {
-      if (event.target.classList.contains('select-button')) {
-        // Если уже была выбранная кнопка
-        if (currentlySelectedButton) {
-           if (currentlySelectedButton === event.target) {
-            tg.showAlert('Уже выбрано');
-            tg.HapticFeedback.impactOccurred('heavy')
-            return;
-          }
-          // Возвращаем ей оригинальный текст и стиль
-          currentlySelectedButton.textContent = 'Выбрать';
-    
-          currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
-
-          // Если выбранная кнопка сейчас нажата повторно
-          tg.HapticFeedback.selectionChanged()
-
+        // функция добавления карточек в панель
+        function populatePanel() {
+            data_mode.forEach(item => {
+                const card = createCard(item.name_mode, item.des_mode);
+                panel.appendChild(card);
+            });
         }
 
-        // Сохраняем ссылку на выбранную кнопку
-        currentlySelectedButton = event.target;
-        currentlySelectedButton.textContent = 'Выбрано';
-        currentlySelectedButton.style.backgroundColor = 'LimeGreen';// или ваш цвет по выбору
+        // функция фильтрации карточек
+        function filterCards() {
+            const filter = input.value.toUpperCase();
+            const cards = panel.getElementsByClassName('card');
 
-        const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
-      }
-    });
-    
+            for (let i = 0; i < cards.length; i++) {
+                const name = cards[i].getElementsByClassName("name_mode")[0];
+                if (name.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        input.addEventListener('keyup', filterCards);
 
 
+        populatePanel();
 
-
-   const panel_sd = document.querySelector('.panel_sd');
-   const input_sd = document.querySelector('#myInputsd');
-   let currentlySelectedButtonSd;
+        panel.addEventListener('click', function(event) {
+          if (event.target.classList.contains('select-button')) {
+            // Если уже была выбранная кнопка
+            if (currentlySelectedButton) {
+              if (currentlySelectedButton === event.target) {
+                tg.showAlert('Уже выбрано');
+                tg.HapticFeedback.impactOccurred('heavy')
+                return;
+              }
+              // Возвращаем ей оригинальный текст и стиль
+              currentlySelectedButton.textContent = 'Выбрать';
         
-// функция создания новой карточки для panel_sd
-function createSdCard(name_mode, des_mode) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-        <div class="media">
-            <div class="media-body content-align">
-                <div>
-                    <h5 class="name_mode">${name_mode}</h5>
-                    <small class="des_mode">${des_mode}</small>
-                </div>
-            </div>
-            <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
-        </div>`;
-    return card;
-}
+              currentlySelectedButton.style.backgroundColor = ''; // или ваш оригинальный цвет
 
-// функция добавления карточек в panel_sd
-function populateSdPanel() {
-    data_sd.forEach(item => {
-        const card = createSdCard(item.name_mode, item.des_mode);
-        panel_sd.appendChild(card);
-    });
-}
+              // Если выбранная кнопка сейчас нажата повторно
+              tg.HapticFeedback.selectionChanged()
 
-function filterCards_sd() {
-    const filter_sd = input_sd.value.toUpperCase();
-    const cards_sd = panel_sd.getElementsByClassName('card');
-    for (let i = 0; i < cards_sd.length; i++) {
-        const name = cards_sd[i].getElementsByClassName("name_mode")[0];
-        if (name.innerHTML.toUpperCase().indexOf(filter_sd) > -1) {
-            cards_sd[i].style.display = "";
+            }
+
+            // Сохраняем ссылку на выбранную кнопку
+            currentlySelectedButton = event.target;
+            currentlySelectedButton.textContent = 'Выбрано';
+            currentlySelectedButton.style.backgroundColor = 'LimeGreen';// или ваш цвет по выбору
+
+            const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+          }
+        });
+        
+
+
+
+
+          const panel_sd = document.querySelector('.panel_sd');
+          const input_sd = document.querySelector('#myInputsd');
+          let currentlySelectedButtonSd;
+        
+          // функция создания новой карточки для panel_sd
+          function createSdCard(name_mode, des_mode) {
+              const card = document.createElement('div');
+              card.className = 'card';
+              card.innerHTML = `
+                  <div class="media">
+                      <div class="media-body content-align">
+                          <div>
+                              <h5 class="name_mode">${name_mode}</h5>
+                              <small class="des_mode">${des_mode}</small>
+                          </div>
+                      </div>
+                      <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
+                      
+                  </div>`;
+              return card;
+          }
+
+          // функция добавления карточек в panel_sd
+          function populateSdPanel() {
+              data_sd.forEach(item => {
+                  const card = createSdCard(item.name_mode, item.des_mode);
+                  panel_sd.appendChild(card);
+              });
+          }
+
+          function filterCards_sd() {
+              const filter_sd = input_sd.value.toUpperCase();
+              const cards_sd = panel_sd.getElementsByClassName('card');
+              for (let i = 0; i < cards_sd.length; i++) {
+                  const name = cards_sd[i].getElementsByClassName("name_mode")[0];
+                  if (name.innerHTML.toUpperCase().indexOf(filter_sd) > -1) {
+                      cards_sd[i].style.display = "";
+                  } else {
+                      cards_sd[i].style.display = "none";
+                  }
+              }
+          }
+
+          input_sd.addEventListener('keyup', filterCards_sd);
+
+          populateSdPanel();
+
+          panel_sd.addEventListener('click', function(event) {
+              if (event.target.classList.contains('select-button')) {
+                  // Если уже была выбранная кнопка
+                  if (currentlySelectedButtonSd) {
+                      if (currentlySelectedButtonSd === event.target) {
+                          tg.showAlert('Уже выбрано');
+                          tg.HapticFeedback.impactOccurred('heavy')
+                          return;
+                      }
+                      // Возвращаем ей оригинальный текст и стиль
+                      currentlySelectedButtonSd.textContent = 'Выбрать';
+                      currentlySelectedButtonSd.style.backgroundColor = ''; // или ваш оригинальный цвет
+                      
+                      // Если выбранная кнопка сейчас нажата повторно
+                      tg.HapticFeedback.selectionChanged()
+                  }
+
+                  // Сохраняем ссылку на выбранную кнопку
+                  currentlySelectedButtonSd = event.target;
+                  currentlySelectedButtonSd.textContent = 'Выбрано';
+                  currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+                  const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+              }
+            }); 
+            const panel_ch = document.querySelector('.panel_ch');
+            const input_ch = document.querySelector('#myInputch');
+            let currentlySelectedButtonCh;
+
+// функция создания новой карточки для panel_ch
+        function createChCard(name_mode) {
+              const card = document.createElement('div');
+              card.className = 'card';
+              card.innerHTML = `
+              <div class="container" style="display: flex; align-items: center;">
+    <div class="media">
+        <div class="media-body content-align">
+            <div>
+                <h5 class="name_mode">${name_mode}</h5>   
+            </div>  
+        </div>
+        <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
+    </div>
+    <span class="close-icon" style="align-self: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" enable-background="new 0 0 40 40">
+            <line x1="15" y1="15" x2="25" y2="25" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10"></line>
+            <line x1="25" y1="15" x2="15" y2="25" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10"></line>
+            <circle class="circle" cx="20" cy="20" r="19" opacity="0" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" fill="none"></circle>
+            <path d="M20 1c10.45 0 19 8.55 19 19s-8.55 19-19 19-19-8.55-19-19 8.55-19 19-19z" class="progress" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" fill="none"></path>
+        </svg>
+    </span>
+</div>
+                `;
+              return card;
+          }
+
+          // функция добавления карточек в panel_sd
+          function populateChPanel() {
+              data_ch.forEach(item => {
+                  const card = createChCard(item.chat_name);
+                  panel_ch.appendChild(card);
+              });
+          }
+
+function filterCards_ch() {
+    const filter_ch = input_ch.value.toUpperCase();
+    const cards_ch = panel_ch.getElementsByClassName('card');
+    for (let i = 0; i < cards_ch.length; i++) {
+        const name = cards_ch[i].getElementsByClassName("name_mode")[0];
+        if (name.innerHTML.toUpperCase().indexOf(filter_ch) > -1) {
+            cards_ch[i].style.display = "";
         } else {
-            cards_sd[i].style.display = "none";
+            cards_ch[i].style.display = "none";
         }
     }
 }
 
-input_sd.addEventListener('keyup', filterCards_sd);
+input_ch.addEventListener('keyup', filterCards_ch);
 
-populateSdPanel();
+populateChPanel();
 
-panel_sd.addEventListener('click', function(event) {
+panel_ch.addEventListener('click', function(event) {
     if (event.target.classList.contains('select-button')) {
         // Если уже была выбранная кнопка
-        if (currentlySelectedButtonSd) {
-            if (currentlySelectedButtonSd === event.target) {
+        if (currentlySelectedButtonCh) {
+            if (currentlySelectedButtonCh === event.target) {
                 tg.showAlert('Уже выбрано');
                 tg.HapticFeedback.impactOccurred('heavy')
                 return;
             }
             // Возвращаем ей оригинальный текст и стиль
-            currentlySelectedButtonSd.textContent = 'Выбрать';
-            currentlySelectedButtonSd.style.backgroundColor = ''; // или ваш оригинальный цвет
+            currentlySelectedButtonCh.textContent = 'Выбрать';
+            currentlySelectedButtonCh.style.backgroundColor = ''; // или ваш оригинальный цвет
             
             // Если выбранная кнопка сейчас нажата повторно
             tg.HapticFeedback.selectionChanged()
         }
 
         // Сохраняем ссылку на выбранную кнопку
-        currentlySelectedButtonSd = event.target;
-        currentlySelectedButtonSd.textContent = 'Выбрано';
-        currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
-        const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+        currentlySelectedButtonCh = event.target;
+        currentlySelectedButtonCh.textContent = 'Выбрано';
+        currentlySelectedButtonCh.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+        const name_mode_ch = event.target.previousElementSibling.textContent;
     }
-    }); 
-        
+});
+
+
+
     tg.onEvent('mainButtonClicked', function(){
         tg.HapticFeedback.impactOccurred('heavy')
         tg.sendData(`${currentlySelectedButtonSd.id}:${currentlySelectedButton.id}`);
@@ -622,6 +768,21 @@ panel_sd.addEventListener('click', function(event) {
       tg.HapticFeedback.selectionChanged()
     });
   }
+
+  document.querySelector('.close-icon').addEventListener("click", function fillProgress(){
+    let progress = document.querySelector('.progress');
+    progress.style.strokeDasharray = "120,120"; 
+    progress.style.transition = "3s cubic-bezier(0.165, 0.775, 0.145, 1.020)"; 
+
+    let callbackFunction = function() {
+      window.alert('123123123')
+
+    };
+
+
+    setTimeout(callbackFunction, 3000);
+});
+
 </script>
 </body>
 </html>
