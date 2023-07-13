@@ -426,7 +426,6 @@ span{
 <button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-secondary-bg-color)')">Shop</button>
 <button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-secondary-bg-color)')">About</button>
 
-<div class="loader"></div>
 <div id="Shop" class="tabcontent">
   <h3 id="123">Shop</h3>
   <p>Coming soon...</p>
@@ -438,6 +437,8 @@ span{
 </div>
 
 <div id="Profile" class="tabcontent">
+  <div class="loader"></div>
+
     <div class="profile-card">
     <div class="image">
 		<img src="" alt="" class="profile-pic">
@@ -502,14 +503,14 @@ span{
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
+  document.querySelector(".start_new").style.display = "none";
+  document.querySelector(".settings").style.display = "none";
   document.querySelector('.profile-card').style.display = 'none';
-  document.getElementById('Shop').style.display = "block";
   let currentlySelectedButton;
   let currentlySelectedButtonSd;
   let currentlySelectedButtonCh;
   var deletedIds = [];
-  document.querySelector(".loader").style.display = "none";
-  document.querySelector('.profile-card').style.display = 'block';
+
 
   fetch(url, {
     method: 'POST',
@@ -804,6 +805,11 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     };
 
     // Reset the state and text when the button loses focus
+    document.querySelector(".loader").style.display = "none";
+    document.querySelector(".start_new").style.display = 'block';
+    document.querySelector(".settings").style.display = 'block';
+    document.querySelector('.profile-card').style.display = 'block';
+
 
 });
     
