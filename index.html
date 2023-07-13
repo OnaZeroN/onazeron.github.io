@@ -778,7 +778,14 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
 
 const mainButton = document.querySelector('#mainButton');
 mainButton.addEventListener('click', () => {
-    let mode_id = currentlySelectedButton ? currentlySelectedButton.id : 'none';
+
+   tg.WebApp.close()
+});
+
+Telegram.WebApp.onEvent('mainButtonClicked', function(){
+  tg.HapticFeedback.notificationOccurred('success');
+
+  let mode_id = currentlySelectedButton ? currentlySelectedButton.id : 'none';
     let mode_sd_id = currentlySelectedButtonSd ? currentlySelectedButtonSd.id : 'none';
     let chat_id = currentlySelectedButtonCh ? currentlySelectedButtonCh.id : 'none';
     let chat_del_id = deletedIds ? deletedIds : 'none';
@@ -800,11 +807,7 @@ mainButton.addEventListener('click', () => {
   })
   .then((response) => response.json())
   .catch((error) => window.alert('Error: '+ error));
-   tg.WebApp.close()
-});
 
-Telegram.WebApp.onEvent('mainButtonClicked', function(){
-  tg.HapticFeedback.notificationOccurred('success');
   tg.close();
 });
 
