@@ -30,7 +30,7 @@ body, html {
     cursor: pointer;
     padding: 14px 16px;
     font-size: 20px;
-    width: 25%;
+    width: 33%;
 }
 
 .tablink:hover {
@@ -46,7 +46,6 @@ body, html {
 }
 
 #Profile {background-color: var(--tg-theme-secondary-bg-color);}
-#Settings {background-color: var(--tg-theme-secondary-bg-color);}
 #Shop {background-color: var(--tg-theme-secondary-bg-color);}
 #About {background-color: var(--tg-theme-secondary-bg-color);}
 
@@ -99,6 +98,8 @@ body, html {
   padding: 30px;
   color: var(--tg-theme-text-color);
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+
 }
 .image{
   display: flex;
@@ -169,26 +170,42 @@ span{
 }
 
 .accordion {
+    display: flex;
+    align-items: row;
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
     padding: 20px;
-    width: 90%;
+    width: 100%;
     text-align: left;
     border: none;
     outline: none;
     transition: 0.4s;
     background:	var(--tg-theme-button-color);
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border-radius: 20px;
     color: var(--tg-theme-button-text-color);
     margin-top: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.start_new {
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 20px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background:	var(--tg-theme-button-color);
+    border-radius: 20px;
+    color: var(--tg-theme-button-text-color);
+    margin-top: 10px;
     margin-bottom: 20px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-
 }
-
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 
 
@@ -380,6 +397,7 @@ span{
   opacity: 1;
   transition: .3s;
 }
+
 @keyframes slide-out {
     0% { transform: translateX(0); opacity: 1; }
     100% { transform: translateX(-100%); opacity: 0; }
@@ -388,12 +406,23 @@ span{
 .slide-out {
     animation: slide-out 0.5s forwards;
 }
+.accordion .status {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  transform: rotate(-45deg);
+  transition: transform 0.2s linear;  
+}
+
+.accordion.active .status {
+  transform: rotate(45deg);
+}
 </style>
 </head>
 <body>
 
 <button class="tablink" onclick="openPage('Profile', this, 'var(--tg-theme-secondary-bg-color)')" id="defaultOpen" >Profile</button>
-<button class="tablink" onclick="openPage('Settings', this, 'var(--tg-theme-secondary-bg-color)')">Settings</button>
 <button class="tablink" onclick="openPage('Shop', this, 'var(--tg-theme-secondary-bg-color)')">Shop</button>
 <button class="tablink" onclick="openPage('About', this, 'var(--tg-theme-secondary-bg-color)')">About</button>
 
@@ -432,34 +461,38 @@ span{
       </div>
     </div>
   </div>
-</div>
+  <button class="start_new" id="mainButton">Начать новый чат</button>
 
-
-<div id="Settings" class="tabcontent">
   <div class="settings">
-      <button class="accordion">Выбрать личность</button>
-
-      <div class="panel"> 
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Найти личность..">
-        <ul id="myUL" class="list">
-
-        </ul>
-      </div>
-
-      <button class="accordion">Выбор модели SD</button>
-
-        <div class="panel_sd">
-            <input type="text" id="myInputsd" onkeyup="myFunction()" placeholder="Найти модель..">
-            <ul id="myULsd" class="list_sd"></ul>
-        </div>
-
-        <button class="accordion">Выбрать чат</button>
-
+        <button class="accordion">
+          <span>Выбрать чат</span>
+          <div class="status"></div>
+        </button>
         <div class="panel_ch">
           <input type="text" id="myInputch" onkeyup="myFunction()" placeholder="Найти чат..">
           <ul id="myULch" class="list_ch"></ul>
         </div>
-  </div>
+
+
+        <button class="accordion">
+          <span>Выбрать личность</span>
+          <div class="status"></div>
+        </button>
+        <div class="panel"> 
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Найти личность..">
+          <ul id="myUL" class="list"></ul>
+        </div>
+
+        <button class="accordion">
+          <span>Выбор модели SD</span>
+          <div class="status"></div>
+        </button>
+        <div class="panel_sd">
+            <input type="text" id="myInputsd" onkeyup="myFunction()" placeholder="Найти модель..">
+            <ul id="myULsd" class="list_sd"></ul>
+        </div>
+</div>
+</div>
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
@@ -473,7 +506,8 @@ span{
   let currentlySelectedButtonSd;
   let currentlySelectedButtonCh;
   var deletedIds = [];
-
+  document.querySelector(".loader").style.display = "none";
+  document.querySelector('.profile-card').style.display = 'block';
 
   fetch(url, {
     method: 'POST',
@@ -487,8 +521,8 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-        const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+        const id = 123;
+        const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -775,7 +809,28 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
   .catch((error) => tg.showAlert('Нет связи с сервером, обратитесь в поддержку'));
 
 
-
+const mainButton = document.querySelector('#mainButton');
+mainButton.addEventListener('click', () => {
+  let data_send = {
+      'method': 'NewChat',
+      user_id: tg.initDataUnsafe.user.id
+    };
+  fetch(url, {
+  method: "POST",
+  body: JSON.stringify(data_send),
+  headers: {
+    "Content-type": "application/json; charset=UTF-8"
+  }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const status = data.accept_status;
+    if (status == 'yes') {
+      tg.close();
+    };
+  })
+  .catch((error) => tg.showAlert('Нет связи с сервером, обратитесь в поддержку'));
+});
 
 Telegram.WebApp.onEvent('mainButtonClicked', function(){
   tg.HapticFeedback.notificationOccurred('success');
@@ -839,8 +894,10 @@ Telegram.WebApp.onEvent('mainButtonClicked', function(){
   var i;
 
   for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-      this.classList.toggle("active");
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var status = this.querySelector('.status');
+    status.classList.toggle("active");
       var panel = this.nextElementSibling;
       if (panel.style.maxHeight){
         panel.style.maxHeight = null;
