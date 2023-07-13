@@ -401,7 +401,6 @@ span{
 <div id="Shop" class="tabcontent">
   <h3 id="123">Shop</h3>
   <p>Coming soon...</p>
-  <button id="mainButton">Нажмите</button>
 </div>
 
 <div id="About" class="tabcontent">
@@ -801,10 +800,14 @@ Telegram.WebApp.onEvent('mainButtonClicked', function(){
     "Content-type": "application/json; charset=UTF-8"
   }
   })
-  .then((response) => response.json())
+  .then(response => response.json())
+  .then(data => {
+    const status = data.accept_status;
+    if (status == 'yes') {
+      tg.close();
+    };
+  })
   .catch((error) => window.alert('Error: '+ error));
-
-  // tg.close();
 });
 
 
