@@ -776,11 +776,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
   .catch((error) => window.alert('Error: '+ error));
 
 
-const mainButton = document.querySelector('#mainButton');
-mainButton.addEventListener('click', () => {
 
-   tg.WebApp.close()
-});
 
 Telegram.WebApp.onEvent('mainButtonClicked', function(){
   tg.HapticFeedback.notificationOccurred('success');
@@ -808,7 +804,7 @@ Telegram.WebApp.onEvent('mainButtonClicked', function(){
   .then((response) => response.json())
   .catch((error) => window.alert('Error: '+ error));
 
-  tg.close();
+  // tg.close();
 });
 
 
