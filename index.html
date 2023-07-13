@@ -488,8 +488,8 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-        const id = tg.initDataUnsafe.user.id;
-        const name = tg.initDataUnsafe.user.first_name;
+        const id = 12321;
+        const name = 123;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -776,13 +776,13 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
   .catch((error) => window.alert('Error: '+ error));
 
 
-  Telegram.WebApp.onEvent('mainButtonClicked', function(){
-    tg.HapticFeedback.notificationOccurred('notificationOccurred');
+const mainButton = document.querySelector('#mainButton');
+mainButton.addEventListener('click', () => {
     let mode_id = currentlySelectedButton ? currentlySelectedButton.id : 'none';
     let mode_sd_id = currentlySelectedButtonSd ? currentlySelectedButtonSd.id : 'none';
     let chat_id = currentlySelectedButtonCh ? currentlySelectedButtonCh.id : 'none';
     let chat_del_id = deletedIds ? deletedIds : 'none';
-    let user_id = tg.initDataUnsafe.user.id;
+    let user_id = 1231231;
     let data_send = {
       'method': 'SendData',
         mode_id: mode_id,
@@ -800,10 +800,13 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
   })
   .then((response) => response.json())
   .catch((error) => window.alert('Error: '+ error));
-  tg.close();
+   tg.WebApp.close()
 });
 
-
+Telegram.WebApp.onEvent('mainButtonClicked', function(){
+  tg.HapticFeedback.notificationOccurred('success');
+  tg.close();
+});
 
 
   function openPage(pageName,elmnt,color) {
