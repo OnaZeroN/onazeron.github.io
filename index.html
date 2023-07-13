@@ -543,6 +543,8 @@ span{
         document.getElementById("name").textContent = `${name}`;
         document.querySelector(".loader").style.display = "none";
         document.querySelector('.profile-card').style.display = 'block';
+        document.querySelector(".start_new").style.display = 'block';
+        document.querySelector(".settings").style.display = 'block';
         const panel = document.querySelector('.list');
         const input = document.querySelector('#myInput');
         let image = document.querySelector('.profile-pic');
@@ -805,10 +807,7 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     };
 
     // Reset the state and text when the button loses focus
-    document.querySelector(".loader").style.display = "none";
-    document.querySelector(".start_new").style.display = 'block';
-    document.querySelector(".settings").style.display = 'block';
-    document.querySelector('.profile-card').style.display = 'block';
+
 
 
 });
