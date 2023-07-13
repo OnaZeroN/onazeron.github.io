@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Загрузка шрифта Montserrat -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -398,8 +399,9 @@ span{
 
 <div class="loader"></div>
 <div id="Shop" class="tabcontent">
-  <h3>Shop</h3>
+  <h3 id="123">Shop</h3>
   <p>Coming soon...</p>
+  <button id="mainButton">Нажмите</button>
 </div>
 
 <div id="About" class="tabcontent">
@@ -462,12 +464,16 @@ span{
 <script>
 
   let tg = window.Telegram.WebApp; // получаем объект webapp телеграма
-  let url = 'https://75a5-80-91-24-243.ngrok-free.app';
+  let url = 'https://08bd-80-91-24-243.ngrok-free.app';
   tg.expand(); // расширяем на всё окно
   tg.MainButton.text = "Готово!"; // изменяем текст кнопки
   tg.MainButton.show(); // показываем
   document.querySelector('.profile-card').style.display = 'none';
   document.getElementById('Shop').style.display = "block";
+  let currentlySelectedButton;
+  let currentlySelectedButtonSd;
+  let currentlySelectedButtonCh;
+  var deletedIds = [];
 
 
   fetch(url, {
@@ -482,8 +488,8 @@ span{
   })
     .then(response => response.json())
     .then(data => {
-	      const id = 123;
-        const name = 123;
+        const id = tg.initDataUnsafe.user.id;
+        const name = tg.initDataUnsafe.user.first_name;
         const requests = data.requests;
         const startDate = data.start_date;
         const plan = data.plan;
@@ -504,7 +510,6 @@ span{
         document.querySelector('.profile-card').style.display = 'block';
         const panel = document.querySelector('.list');
         const input = document.querySelector('#myInput');
-        let currentlySelectedButton;
 
         // функция создания новой карточки
         function createCard(name_mode, des_mode) {
@@ -577,6 +582,7 @@ span{
 
             const name_mode = event.target.previousElementSibling.querySelector('.name_mode').textContent;
           }
+
         });
         
 
@@ -585,7 +591,6 @@ span{
 
           const panel_sd = document.querySelector('.panel_sd');
           const input_sd = document.querySelector('#myInputsd');
-          let currentlySelectedButtonSd;
         
           // функция создания новой карточки для panel_sd
           function createSdCard(name_mode, des_mode) {
@@ -656,7 +661,6 @@ span{
             }); 
             const panel_ch = document.querySelector('.panel_ch');
             const input_ch = document.querySelector('#myInputch');
-            let currentlySelectedButtonCh;
 
 // функция создания новой карточки для panel_ch
         function createChCard(name_mode) {
@@ -734,7 +738,6 @@ panel_ch.addEventListener('click', function(event) {
 
   });
 
-  var deletedIds = [];
 
 document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     var isConfirmed = false;
@@ -766,18 +769,42 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
     };
 
     // Reset the state and text when the button loses focus
-    button.addEventListener('blur', function() {
-        isConfirmed = false;
-        this.querySelector('span').innerText = 'DELETE';
-    });
 
+});
+    
+  })
+  .catch((error) => window.alert('Error: '+ error));
+
+
+  Telegram.WebApp.onEvent('mainButtonClicked', function(){
+    tg.HapticFeedback.notificationOccurred('notificationOccurred');
+    let mode_id = currentlySelectedButton ? currentlySelectedButton.id : 'none';
+    let mode_sd_id = currentlySelectedButtonSd ? currentlySelectedButtonSd.id : 'none';
+    let chat_id = currentlySelectedButtonCh ? currentlySelectedButtonCh.id : 'none';
+    let chat_del_id = deletedIds ? deletedIds : 'none';
+    let user_id = tg.initDataUnsafe.user.id;
+    let data_send = {
+      'method': 'SendData',
+        mode_id: mode_id,
+        mode_sd_id: mode_sd_id,
+        chat_id: chat_id,
+        chat_del_id: chat_del_id,
+        user_id: user_id
+    };
+  fetch(url, {
+  method: "POST",
+  body: JSON.stringify(data_send),
+  headers: {
+    "Content-type": "application/json; charset=UTF-8"
+  }
+  })
+  .then((response) => response.json())
+  .catch((error) => window.alert('Error: '+ error));
+  tg.close();
 });
 
 
 
-    
-  })
-  .catch((error) => window.alert('Error: '+ error));
 
   function openPage(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
@@ -818,24 +845,6 @@ document.querySelectorAll('.confirm-delete-button').forEach(function(button) {
       tg.HapticFeedback.selectionChanged()
     });
   }
-  tg.onEvent('mainButtonClicked', function(){
-    tg.HapticFeedback.impactOccurred('heavy');
-    fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      'method': 'SendData',
-      'sd_model': `${currentlySelectedButtonSd.id}`, 
-      'gpt_mode': `${currentlySelectedButton.id}`,
-      'del_chat': `${deletedIds}`,
-      'chat': `${currentlySelectedButtonCh.id}`
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-    .then(response => response.json())
-    .catch((error) => window.alert('Error: '+ error));  
-});
 
 </script>
 </body>
