@@ -626,76 +626,78 @@ span{
 
 
 
-          const panel_sd = document.querySelector('.panel_sd');
-          const input_sd = document.querySelector('#myInputsd');
+          // const panel_sd = document.querySelector('.panel_sd');
+          // const input_sd = document.querySelector('#myInputsd');
         
-          // функция создания новой карточки для panel_sd
-          function createSdCard(name_mode, des_mode) {
-              const card = document.createElement('div');
-              card.className = 'card';
-              card.innerHTML = `
-                  <div class="media">
-                      <div class="media-body content-align">
-                          <div>
-                              <h5 class="name_mode">${name_mode}</h5>
-                              <small class="des_mode">${des_mode}</small>
-                          </div>
-                      </div>
-                      <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
+          // // функция создания новой карточки для panel_sd
+          // function createSdCard(name_mode, des_mode) {
+          //     const card = document.createElement('div');
+          //     card.className = 'card';
+          //     card.innerHTML = `
+          //         <div class="media">
+          //             <div class="media-body content-align">
+          //                 <div>
+          //                     <h5 class="name_mode">${name_mode}</h5>
+          //                     <small class="des_mode">${des_mode}</small>
+          //                 </div>
+          //             </div>
+          //             <button class="btn btn-primary select-button" id=${name_mode}>Выбрать</button>
                       
-                  </div>`;
-              return card;
-          }
+          //         </div>`;
+          //     return card;
+          // }
 
-          // функция добавления карточек в panel_sd
-          function populateSdPanel() {
-              data_sd.forEach(item => {
-                  const card = createSdCard(item.name_mode, item.des_mode);
-                  panel_sd.appendChild(card);
-              });
-          }
+          // // функция добавления карточек в panel_sd
+          // function populateSdPanel() {
+          //     data_sd.forEach(item => {
+          //         const card = createSdCard(item.name_mode, item.des_mode);
+          //         panel_sd.appendChild(card);
+          //     });
+          // }
 
-          function filterCards_sd() {
-              const filter_sd = input_sd.value.toUpperCase();
-              const cards_sd = panel_sd.getElementsByClassName('card');
-              for (let i = 0; i < cards_sd.length; i++) {
-                  const name = cards_sd[i].getElementsByClassName("name_mode")[0];
-                  if (name.innerHTML.toUpperCase().indexOf(filter_sd) > -1) {
-                      cards_sd[i].style.display = "";
-                  } else {
-                      cards_sd[i].style.display = "none";
-                  }
-              }
-          }
+          // function filterCards_sd() {
+          //     const filter_sd = input_sd.value.toUpperCase();
+          //     const cards_sd = panel_sd.getElementsByClassName('card');
+          //     for (let i = 0; i < cards_sd.length; i++) {
+          //         const name = cards_sd[i].getElementsByClassName("name_mode")[0];
+          //         if (name.innerHTML.toUpperCase().indexOf(filter_sd) > -1) {
+          //             cards_sd[i].style.display = "";
+          //         } else {
+          //             cards_sd[i].style.display = "none";
+          //         }
+          //     }
+          // }
 
-          input_sd.addEventListener('keyup', filterCards_sd);
+          // input_sd.addEventListener('keyup', filterCards_sd);
 
-          populateSdPanel();
+          // populateSdPanel();
 
-          panel_sd.addEventListener('click', function(event) {
-              if (event.target.classList.contains('select-button')) {
-                  // Если уже была выбранная кнопка
-                  if (currentlySelectedButtonSd) {
-                      if (currentlySelectedButtonSd === event.target) {
-                          tg.showAlert('Уже выбрано');
-                          tg.HapticFeedback.impactOccurred('heavy')
-                          return;
-                      }
-                      // Возвращаем ей оригинальный текст и стиль
-                      currentlySelectedButtonSd.textContent = 'Выбрать';
-                      currentlySelectedButtonSd.style.backgroundColor = ''; // или ваш оригинальный цвет
+          // panel_sd.addEventListener('click', function(event) {
+          //     if (event.target.classList.contains('select-button')) {
+          //         // Если уже была выбранная кнопка
+          //         if (currentlySelectedButtonSd) {
+          //             if (currentlySelectedButtonSd === event.target) {
+          //                 tg.showAlert('Уже выбрано');
+          //                 tg.HapticFeedback.impactOccurred('heavy')
+          //                 return;
+          //             }
+          //             // Возвращаем ей оригинальный текст и стиль
+          //             currentlySelectedButtonSd.textContent = 'Выбрать';
+          //             currentlySelectedButtonSd.style.backgroundColor = ''; // или ваш оригинальный цвет
                       
-                      // Если выбранная кнопка сейчас нажата повторно
-                      tg.HapticFeedback.selectionChanged()
-                  }
+          //             // Если выбранная кнопка сейчас нажата повторно
+          //             tg.HapticFeedback.selectionChanged()
+          //         }
 
-                  // Сохраняем ссылку на выбранную кнопку
-                  currentlySelectedButtonSd = event.target;
-                  currentlySelectedButtonSd.textContent = 'Выбрано';
-                  currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
-                  const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
-              }
-            }); 
+          //         // Сохраняем ссылку на выбранную кнопку
+          //         currentlySelectedButtonSd = event.target;
+          //         currentlySelectedButtonSd.textContent = 'Выбрано';
+          //         currentlySelectedButtonSd.style.backgroundColor = 'LimeGreen'; // или ваш цвет по выбору
+          //         const name_mode_sd = event.target.previousElementSibling.querySelector('.name_mode').textContent;
+          //     }
+          //   }); 
+
+          
             const panel_ch = document.querySelector('.panel_ch');
             const input_ch = document.querySelector('#myInputch');
 
